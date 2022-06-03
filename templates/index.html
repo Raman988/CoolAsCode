@@ -1,8 +1,168 @@
-<h1>Welcome</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-{% if user.is_authenticated%}
-<a href="{% url 'logout' %}">Logout</a> <br>
-{% else %}
-<a href="{% url 'register' %}">Register</a> <br>
-<a href="{% url 'login' %}">Login</a> 
-{% endif %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% block content %}
+
+
+    <div class="breadcumb-area bg-img bg-gradient"  style="background-image: url('{% static 'img/bg-img/14.jpg' %}');">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+
+             <form id="job-main-form" method="get" action="{% url 'appointment:search' %}" class="search-doctor-form">
+                    <div class="row mb-5">
+
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+                            <input type="text" id="location" name="location"
+                                   class="form-control form-control-lg" placeholder="Any Location ?  Ex : Uttara, Dhaka">
+                        </div>
+                        {% comment %} <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+                            <input type="text" id="name" name="name"
+                                   class="form-control form-control-lg" placeholder="Name">
+                        </div> {% endcomment %}
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+                            <input type="text" id="your_expertise" name="your_expertise"
+                                   class="form-control form-control-lg" placeholder="Specialists">
+                            {% comment %} <select id="department" name="your_expertise" class="form-control">
+                                 <option style="display: none;" >Select Your Service</option>
+                                <option>Cardiology</option>
+                                <option>Dentistry</option>
+                                <option>ENT Specialists</option>
+                                <option>Astrology</option>
+                                <option>Neuroanatomy</option>
+                                <option>Blood Screening</option>
+                                <option>Eye Care</option>
+                                <option>Physical Therapy</option>
+                            </select> {% endcomment %}
+                        </div>
+
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+                            <button type="submit" class="btn btn-info btn-lg btn-block text-black btn-search" style ="font-size:90%; width: 20%; height :90%"><i
+                                    class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <section class="dentist-area section-padding-50-0">
+
+        <div class="container">
+
+
+
+
+
+
+
+            {% comment %} <div class="row">
+
+                <div class="col-12">
+                    <div class="section-heading text-center">
+
+
+                        <h3>We have found {{ appointment.count }} doctor/s. </h3>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+
+            <div class="row">
+
+
+                {% for apt in home %}
+                {% comment %} {% for i in d_add %} {% endcomment %}
+                {% comment %} {% for j in ds %} {% endcomment %}
+
+                    <!-- Single Dentist Area -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="single-dentist-area mb-100">
+                            <img style="height: 500px; width: 600px" src="{{ apt.user.showAppointment.get_image_url }}" alt="">
+                            <!-- Dentist Content -->
+                            <div class="dentist-content">
+                                <!-- Social Info -->
+                                <div class="dentist-social-info">
+
+                                </div>
+                                <!-- Dentist Info -->
+                                <div class="dentist-info bg-dark bg-gradient-overlay">
+                                    {% if request.user.is_authenticated and request.user.is_Patient %}
+                    <h5>{{ apt.user.name }}</h5>
+                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+
+                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                        in {{ apt.hospital_name }}</p>
+                    <p>
+                        AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
+                        <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
+                            Appointment</a>
+
+                    </p>
+                    {% elif request.user.is_authenticated and request.user.is_Doctor%}
+
+                    <h5>{{ apt.user.name }}</h5>
+                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                        in {{ apt.hospital_name }}</p>
+                    <p>AT {{ apt.user.showAdditional.location }}</p>
+
+                    {% else %}
+
+                    <h5>{{ apt.user.name }}</h5>
+                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                        in {{ apt.hospital_name }}</p>
+                    <p>
+                        AT {{ apt.user.showAdditional.location }} </p>
+
+
+                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            
+
+                <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+{% endblock %}

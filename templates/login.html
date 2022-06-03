@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load static %}
+{% block content %}
 {% comment %}
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +65,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="assets/css/style.css">
+		
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   {% comment %}
   <link href="https://fonts.googleapis.com/css?family=Nunito:600,700,900" rel="stylesheet"> {% endcomment %}
@@ -74,7 +87,12 @@
       width: 500px;
       border-radius: 25px;
       margin: 150px auto;
+      font-size: 150% ;
+      font-style: normal;
 
+    }
+    #body {
+    background-color:  #b2b9c2;
     }
     
   </style>
@@ -86,7 +104,7 @@
     <div class="card-body">
       <h2 class="text-center">Login form</h2>
       <br>
-      <form action="{% url 'login' %}" method="POST" novalidate>
+      <form action="{% url 'accounts:login' %}" method="POST" novalidate>
         {% csrf_token %}
         {% for field in form.visible_fields %}
         <div class="form-group">
@@ -99,13 +117,13 @@
           {% endif %}
           {% endfor %}
           <br>
-          <input type="submit" value="Login" class="btn btn-block btn-primary">
-          <a href="/accounts/reset_password/" class="btn btn-link">
+          <input type="submit" value="Login" class="btn btn-block btn-primary" style ="font-size : 105%">
+          <a href="{%url "accounts:reset_password"%}" class="btn btn-link"style ="font-size : 105%">
             Forgot Your Password?
         </a>
         </div>
-        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger"><i class="fa fa-google"></i>&emsp;Login with Google</a>
-        <a href="{% url 'social:begin' 'linkedin-oauth2' %}" class="btn btn-info"><i class="fa fa-linkedin"></i>&emsp;Login with linkedin</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger"  style ="font-size : 105%"><i class="fa fa-google"></i>&emsp;Login with Google</a>
+        <a href="{% url 'social:begin' 'linkedin-oauth2' %}" class="btn btn-info" style ="font-size : 105%"><i class="fa fa-linkedin"v></i>&emsp;Login with linkedin</a>
 
         
           
@@ -113,4 +131,8 @@
 
       </form>
     </div>
-    <div>
+  </div>
+</body>
+
+
+    {%endblock%}  

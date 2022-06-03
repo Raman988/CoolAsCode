@@ -35,7 +35,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
-    'pages.apps.PagesConfig',
+    # 'pages.apps.PagesConfig',
+    'appointment',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'social.apps.django_app.default',
     'social_django',
+    'bootstrapform',
+
 ]
 
 MIDDLEWARE = [
@@ -77,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'docmed.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -89,7 +92,18 @@ DATABASES = {
         'NAME':os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+# DATABASES = {  
+#     'default': {  
+#         'ENGINE': 'django.db.backends.mysql',  
+#         'NAME': 'testonly',  
+#         'USER': 'root',  
+#         'PASSWORD': '',  
+#         'HOST': '127.0.0.1',  
+#         'PORT': '3307',  
+#         # 'OPTIONS': {  
+#         #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+#         # }  
+#     }  }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -128,6 +142,7 @@ EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = "ramanjeengar24@gmail.com"
 EMAIL_HOST_PASSWORD = 'zvyhbtnxrwoofhhr'
+# EMAIL_HOST_PASSWORD = 'Raman@2002'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
@@ -135,7 +150,17 @@ EMAIL_PORT = 587
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
+MEDIA_DIR = os.path.join(BASE_DIR, "media"),
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -163,3 +188,7 @@ LOGIN_URL = '/auth/login/linkedin-oauth2/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'accounts/login'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+
+razorpay_id = 'rzp_test_A2bMwerZhlIJyI'
+razorpay_account_id = 'H3ZzVhutPiLipmqKZ40frZTb'

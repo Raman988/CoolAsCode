@@ -20,8 +20,10 @@ from django.conf.urls import url,  include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include(doctor.urls)),
-    path('accounts/', include('accounts.urls')),
-    path('', include('pages.urls')),
+    path('', include('accounts.urls')),
+    path('', include('appointment.urls')),
+
+    # path('', include('pages.urls')),
     # path('', admin.site.urls),
     url('', include('social_django.urls', namespace='social')),
 ]

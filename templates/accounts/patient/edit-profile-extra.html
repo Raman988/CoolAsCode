@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block title %}Patient Profile Edit{% endblock %}
+
+{% block content %}
+
+ <div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5 mb-5 mb-lg-0">
+            <center>
+                <h3>Edit Profile </h3>
+            </center>
+
+
+
+            <form action="" method="POST">{% csrf_token %}
+                {{ form|bootstrap }}
+                {{form1|bootstrap }}
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Update" class="btn btn-primary btn-md text-white">
+                    </div>
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+</div> 
+
+
+{% comment %} <div class="main-area">
+    <div class="product-cards">
+        <h1 style="text-align:center;">Profile Update</h1> {% endcomment %}
+
+        {% comment %} {% for i in patient %} {% endcomment %}
+        {% comment %} <div class="row featurette"> {% endcomment %}
+            {% comment %} <div class="col-md-2">
+                <img src="/media/{{i.product.image}}" class="card-img-top" alt="...">
+            </div> {% endcomment %}
+            {% comment %} <div class="col-md-7"> {% endcomment %}
+                {% comment %} <h2 class="featurette-heading">{{}}</h2>
+                <p class="lead">Rs. {{i.product.price}}</p>
+                <p class="lead">Quantity- {{i.quantity}}</p> {% endcomment %}
+                {% comment %} <form method="POST" action="{% url 'appointment:patient-list'  %}">{% csrf_token %} {% endcomment %}
+                {% comment %} <form method="POST" action="{% url 'accounts:patient-profile-update'  %}">{% csrf_token %}
+                    <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="id_name" name="name" placeholder= "{{patient.name}}">
+                   </div> {% endcomment %}
+                   {% comment %} <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="id_name" name="name" value= "{{i.name}}">
+                   </div> {% endcomment %}
+                   {% comment %} <form action="" method="POST">{% csrf_token %}
+                    {% for field in form %}
+                {% if field.name == 'gender' %}
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="Male "
+                                   value="M">
+                            <label class="form-check-label" for="male">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="Female"
+                                   value="F">
+                            <label class="form-check-label" for="female">Female</label>
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <div class="form-group">
+                        <label for="id_{{ field.name }}">{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type }}"
+                               class="form-control"
+                               name="{{ field.name }}"
+                               id="id_{{ field.name }}"
+                               placeholder="{{ patient.name }}">
+                    </div>
+
+                      {% endif %}
+            {% endfor %}
+                    <button class="btn btn-primary" type="submit">Update Quantity</button>
+                </form> {% endcomment %}
+                {% comment %} <form method="POST" action="{% url 'deletefromcart' %}">{% csrf_token %}
+                    <button class="btn btn-primary" type="submit">Delete</button>
+                </form> {% endcomment %}
+            {% comment %} </div>
+
+        </div>
+        <hr> {% endcomment %}
+        {% comment %} {% empty %} {% endcomment %}
+        {% comment %} <h4>Empty Cart</h4> {% endcomment %}
+        {% comment %} {% endfor %} {% endcomment %}
+
+
+
+        {% endblock %}

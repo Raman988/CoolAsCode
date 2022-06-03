@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
 {% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,15 +13,34 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
     integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <title>Patient Registration</title>
+  <style>
+      
+    #body {
+    background-color:  #b2b9c2;
+    }
+    #card{
+      padding-top: 50px;
+    }
+    #cardb{
+      border-radius: 0.75rem;
+    }
+    
+  </style>
 </head>
-
-<body>
+{% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+<body id="body">
 
   <section>
     <div class="container">
       <div class="row">
-        <div class="col-md-6 mx-auto">
-          <div class="card">
+        <div class="col-md-6 mx-auto" id="card">
+          <div class="card" id="cardb">
             <div class="card-header text-black">
               <h2>Patient Registration</h2>
             </div>
@@ -30,12 +53,12 @@
               <label for="gender">Gender</label>
               <br>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="male gender" value="male">
-                <label class="form-check-label" for="male">Male</label>
+                <input class="form-check-input" type="radio" name="gender" id="Male" value="M">
+                <label class="form-check-label" for="Male">Male</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                <label class="form-check-label" for="female">Female</label>
+                <input class="form-check-input" type="radio" name="gender" id="Female" value="F">
+                <label class="form-check-label" for="Female">Female</label>
               </div>
             </div>
 
@@ -130,3 +153,6 @@
 </body>
 
 </html> 
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% comment %} {% extends 'firstapp/basic.html' %} {% endcomment %}
+{% comment %} {% load static %}
+{% block title %}
+
+{% endblock %}
+{% block css %}
+<style>
+</style>
+{% endblock %}
+
+{% block body %} {% endcomment %}
+{% load static %}
+{% block content %}
+<div class="info">
+<div class="container" style="text-align:center;">
+<h1>Payment Success</h1>
+<br>
+<h3>Congratulations! You have successfully done the payment.You can print invoice related to it.</h3>
+<a class="btn btn-primary btn-lg signup-button" href="{% url "appointment:generateinvoice" pk=id %}">Print Invoice</a>
+</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

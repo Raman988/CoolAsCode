@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+{% comment %} {% load static %}
+{% block content %} {% endcomment %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+{% block css %}
+<style>
+</style>
+{% endblock %}
+    {% block content %}
+<div class="info">
+  <div class="container">
+    <h1 style="text-align:center;">Payment Summary</h1>
+<form method="POST" action="/payment/">{% csrf_token %}
+{%for i in cart%}
+    Your Appointment to {{i.user.name}}
+    {%endfor%}
+    <br>
+    <button class="btn btn-primary" type="submit">Proceed for Payment</button>
+</form>
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}

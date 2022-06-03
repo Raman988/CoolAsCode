@@ -1,0 +1,23 @@
+<div style="background-color: rgb(228, 228, 228);">
+    <div style="margin: 20px; background-color: #fff;">
+
+Hi {{ user.name }},
+Your appointment with appointment id: {{order.order_id}} has been placed successfully.
+
+
+{% comment %} {% for i in order.productinorder_set.all %}
+{% comment %} Product:{{i.product}} Quantity:{{i.quantity}} Price:{{i.price}} {% endcomment %}
+
+Total:{{order.total_amount}}
+
+appointment has been taken .
+
+We have attached the invoice for your appointment with this mail.
+
+Thanks for trusting us and using our services!
+
+Sincerely,
+Docmed Team
+
+    </div>
+</div>

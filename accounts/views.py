@@ -1,10 +1,13 @@
 from django.contrib.auth import login, logout,authenticate
 from django.shortcuts import redirect, render,HttpResponse
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView
 from .form import PatientSignUpForm, DoctorSignUpForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import User
+from .models import CustomUser, Doctor, DoctorAdditional, PatientAdditional
+# from .models import User
+from django.contrib.auth.views import LoginView, LogoutView
+
 from docmed import settings
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
@@ -16,33 +19,39 @@ from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-
+from django.contrib.messages.views import SuccessMessageMixin
+from appointment.models import Appointment
 def register(request):
-    return render(request, '../templates/register.html')
+    return render(request, 'register.html')
 
-class Patient_register(CreateView):
-    model = User
+class Patient_register(CreateView,SuccessMessageMixin):
+    # model = CustomUser
     form_class = PatientSignUpForm
-    template_name = '../templates/Patient_register.html'
-    success_url = reverse_lazy('Patient_register')
+    template_name = 'Patient_register.html'
+    success_url = reverse_lazy('accounts:Patient_register')
+    # success_message = "Redirect successfully created!"
+
 
     def post(self, request, *args, **kwargs):
-        #form = RegistrationForm(request.POST)
+        # form = PatientSignUpForm(request.POST)
         user_email = request.POST.get('email')
         try:
-            existing_user = User.objects.get(email = user_email)
+            existing_user = CustomUser.objects.get(email = user_email)
             if(existing_user.is_active == False):
                 existing_user.delete()
         except:
             pass
         response = super().post(request, *args, **kwargs)
         if response.status_code == 302:
-            user = User.objects.get(email = user_email)
+            age = request.POST.get('age')
+            # gender = request.POST.get('gender')
+            user = CustomUser.objects.get(email = user_email)
+            s_add = PatientAdditional.objects.create(user = user, age = age)
             user.is_active = False
             user.save()
-            current_site = get_current_site(request)     #www.wondershop.in:8000  127.0.0.1:8000 
+            current_site = get_current_site(request)     #www.Docmed.in:8000  127.0.0.1:8000 
             mail_subject = 'Activate your account.'
-            message = render_to_string('../templates/acc_active_email.html', {
+            message = render_to_string('acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
@@ -50,7 +59,7 @@ class Patient_register(CreateView):
             })
             #print(message)
             to_email = user_email   
-            #form = RegistrationForm(request.POST)   # here we are again calling all its validations
+            form = PatientSignUpForm(request.POST)   # here we are again calling all its validations
             form = self.get_form()
             try:
                 send_mail(
@@ -77,8 +86,8 @@ class Patient_register(CreateView):
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
+        user = CustomUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist) as e:
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
@@ -93,28 +102,34 @@ def activate(request, uidb64, token):
 
 
 class Doctor_register(CreateView):
-    model = User
+    model = CustomUser
     form_class = DoctorSignUpForm
-    template_name = '../templates/Doctor_register.html'
-    success_url = reverse_lazy('Doctor_register')
+    template_name = 'Doctor_register.html'
+    success_url = reverse_lazy('accounts:Doctor_register')
 
     def post(self, request, *args, **kwargs):
         #form = RegistrationForm(request.POST)
         user_email = request.POST.get('email')
         try:
-            existing_user = User.objects.get(email = user_email)
+            existing_user = CustomUser.objects.get(email = user_email)
             if(existing_user.is_active == False):
                 existing_user.delete()
         except:
             pass
         response = super().post(request, *args, **kwargs)
         if response.status_code == 302:
-            user = User.objects.get(email = user_email)
+            location = request.POST.get('location')
+            your_expertise = request.POST.get('your_expertise')
+            # gender = request.POST.get('gender')
+
+            user = CustomUser.objects.get(email = user_email)
+            d_add = DoctorAdditional.objects.create(user = user, location = location, your_expertise=your_expertise)
+
             user.is_active = False
             user.save()
-            current_site = get_current_site(request)     #www.wondershop.in:8000  127.0.0.1:8000 
+            current_site = get_current_site(request)     #www.Docmed.in:8000  127.0.0.1:8000 
             mail_subject = 'Activate your account.'
-            message = render_to_string('../templates/acc_active_email.html', {
+            message = render_to_string('acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
@@ -122,7 +137,7 @@ class Doctor_register(CreateView):
             })
             #print(message)
             to_email = user_email   
-            #form = RegistrationForm(request.POST)   # here we are again calling all its validations
+            form = DoctorSignUpForm(request.POST)   # here we are again calling all its validations
             form = self.get_form()
             try:
                 send_mail(
@@ -147,23 +162,46 @@ class Doctor_register(CreateView):
     #     return redirect('/')
 
 
-def login_request(request):
-    if request.method=='POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None :
-                login(request,user)
-                return redirect('/')
-            else:
-                messages.error(request,"Invalid username or password")
-        else:
-                messages.error(request,"Invalid username or password")
-    return render(request, '../templates/login.html',
-    context={'form':AuthenticationForm()})
+# def login_request(request):
+#     if request.method=='POST':
+#         form = AuthenticationForm(data=request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data.get('email')
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(email=email, password=password)
+#             if user is not None :
+#                 login(request,user)
+#                 return redirect('/')
+#             else:
+#                 messages.error(request,"Invalid email or password")
+#         else:
+#                 messages.error(request,"Invalid email or password")
+#     return render(request, '../templates/login.html',
+#     context={'form':AuthenticationForm()})
 
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+class LoginViewUser(LoginView):
+    template_name = "login.html"
+
+# class LogoutViewUser(LogoutView):
+#     success_url = reverse_lazy('index')   
+
+class HomePageView(ListView):
+    paginate_by = 9
+    model = Appointment
+    context_object_name = 'home'
+    template_name = "index.html"
+
+    def get_queryset(self):
+        return self.model.objects.all().order_by('-id')
+# class Home1PageView(ListView):
+#     paginate_by = 9
+#     model = Appointment
+#     context_object_name = 'home'
+#     template_name = "index1.html"
+
+#     def get_queryset(self):
+#         return self.model.objects.all().order_by('-id')
