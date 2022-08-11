@@ -25,46 +25,19 @@ from docmed import settings
 For Patient Profile
     
 """
-# Create your views here.
-# class ProductDetail(DetailView):
-#     model = Product
-#     template_name = "firstapp/productdetail.html"
-#     context_object_name = "product"
+
 
 class EditPatientProfileView(UpdateView):
     model=Patient
     form_class = PatientProfileUpdateForm
     template_name = 'accounts/patient/edit-profile.html'
     success_url = reverse_lazy('accounts:index')
-    # success_message = "Redirect successfully created!"
+  
     context_object_name = 'patient'
 
 
 
-    # def post(self, request,pk,*args, **kwargs):
-    #     # form = PatientSignUpForm(request.POST)
-    #     # user_email = request.POST.get('email')
-        
-    #     # try:
-    #     #     existing_user = CustomUser.objects.get(email = user_email)
-    #     #     if(existing_user.is_active == False):
-    #     #         existing_user.delete()
-    #     # except:
-    #     #     pass
-    #     response = super().post(request, *args, **kwargs)
-    #     if response.status_code == 302:
-    #         age = request.POST.get('age')
-    #         # gender = request.POST.get('gender')
-    #         user = Patient.objects.get(id=pk)
-    #         s_add = PatientAdditional.objects.create(user = user, age = age)
-    #         # user.is_active = False
-    #         s_add.save()
-    # model = Patient
-    # form_class = PatientProfileUpdateForm #,PatientProfileUpdateForm2
-    # # context_object_name = 'patient'
-    # template_name = 'accounts/patient/edit-profile.html'
-    # # success_url = reverse_lazy('appointment:patient-list')
-    # success_url = reverse_lazy('accounts:patient-profile-update')
+  
 
     @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
     @method_decorator(user_is_patient)
@@ -79,11 +52,7 @@ class EditPatientProfileView(UpdateView):
         # context = self.get_context_data(object=self.object)
         return self.render_to_response(self.get_context_data())
 
-    # def get_context_data(self, **kwargs):
-    #     kwargs.setdefault('view', self)
-    #     if self.extra_context is not None:
-    #         kwargs.update(self.extra_context)
-    #     return kwargs    
+   
 
     def get_object(self, queryset=None):
         obj = self.request.user
@@ -93,50 +62,10 @@ class EditPatientProfileView(UpdateView):
             raise Http404("Patient doesn't exists")
         return obj
         
-    # def post(self, request, *args, **kwargs):
-    #     response = super().post(request, *args, **kwargs)
-    #     if response.status_code == 302:
-
-    #        # if int(request.POST.get("quantity")) == 0:
-    #        #     productincart = self.get_object()
-    #        #     productincart.delete()
-    #         return response
-    #     else:
-
-    #         messages.error(request, "error in quantity")
-    #         return redirect(reverse_lazy("accounts:patient-profile-update"))  
+   
 
     
-# class EditPatientProfileView1(UpdateView):
-#     model=PatientAdditional
-#     form_class = PatientProfileUpdateForm2
-#     template_name = 'accounts/patient/edit-profile-extra.html'
-#     success_url = reverse_lazy('accounts:index')
-#     # success_message = "Redirect successfully created!"
-#     context_object_name = 'patient'
 
-#     @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-#     @method_decorator(user_is_patient)
-#     def dispatch(self, request, *args, **kwargs):
-#         return super().dispatch(self.request, *args, **kwargs)
-
-#     def get(self, request, *args, **kwargs):
-#         try:
-#             self.object = self.get_object()
-#         except Http404:
-#             raise Http404("User doesn't exists")
-#         # context = self.get_context_data(object=self.object)
-#         return self.render_to_response(self.get_context_data())
-
-
-#     def get_object(self, queryset=None):
-#         obj = self.request.user
-#         print(obj)
-#         obj.save()
-#         if obj is None:
-#             raise Http404("Patient doesn't exists")
-#         return obj
-        
 def editprofile(request,id):
     context ={}
  
@@ -147,12 +76,7 @@ def editprofile(request,id):
     # pass the object as instance in form
     form1 = PatientProfileUpdateForm2(request.POST or None, instance = obj1)
     form = PatientProfileUpdateForm(request.POST or None, instance = obj)
-    # user =CustomUser.objects.get(id=id)
-    # age = request.POST.get('age')
-    # s_add=PatientAdditional.objects.get(id=id,age=age)
-    # s_add.save()
-    # save the data from the form and
-    # redirect to detail_view
+    
     if form.is_valid() and form1.is_valid():
         form.save()
         form1.save()
@@ -164,10 +88,7 @@ def editprofile(request,id):
     return render(request, "accounts/patient/edit-profile-extra.html", context)
 
 def editprofiledoctor(request,id):
-    # context ={}
-    # context1 ={}
- 
-    # fetch the object related to passed id
+   
     obj1=DoctorAdditional.objects.get(user=request.user)
     obj = get_object_or_404(Doctor, id=id)
  
@@ -183,12 +104,7 @@ def editprofiledoctor(request,id):
         form2 = CreateAppointmentForm (request.POST or None,request.FILES or None, instance=obj2)
         # img_object = form2.instance  
 
-    # user =CustomUser.objects.get(id=id)
-    # age = request.POST.get('age')
-    # s_add=PatientAdditional.objects.get(id=id,age=age)
-    # s_add.save()
-    # save the data from the form and
-    # redirect to detail_view
+    
     if form.is_valid() and form1.is_valid() and form2.is_valid():
         form.save()
         form1.save()
@@ -220,28 +136,20 @@ def doctordetails(request,id):
         
    
         if request.method == 'POST':
-            # form = TakeAppointmentDetailForm(request.POST)
+           
             appointment = Appointment.objects.get(id=id)
-            # full_name = request.POST.get('full_name')
+           
             message = request.POST.get('message')
             date = request.POST.get('date')
             time = request.POST.get('time')
-            # phone_number = request.POST.get('phone_number')
-            # user = User.objects.get(user =request.user)
+            
             t_app = TakeAppointment.objects.create(appointment=appointment, user=request.user,message=message, date=date,time=time) 
             t_app.save()
             return  redirect(reverse_lazy("appointment:detail"))
-            # context={'apt': appointment}
+           
         return render(request, 'appointment/take_appointment_detail.html')
     
-        # form = request.get_form()
-        # if form.is_valid():      #clean_data
-        #     if len(form.cleaned_data.get('message'))>20:
-        #         form.add_error('message', 'Query length is not right')
-        #         return render(request, 'appointment/take_appointment_detail.html', {'form':form})
-        #     form.save()
-        # return HttpResponse("Thank YOu")
-
+       
 class TakeAppointmentView(CreateView):
     template_name = 'appointment/take_appointment.html'
     form_class = TakeAppointmentForm
@@ -276,32 +184,7 @@ class TakeAppointmentView(CreateView):
 """
 
 
-# class EditDoctorProfileView(UpdateView):
-#     model = Doctor
-#     form_class = DoctorProfileUpdateForm
-#     context_object_name = 'doctor'
-#     template_name = 'accounts/doctor/edit-profile.html'
-#     success_url = reverse_lazy('accounts:doctor-profile-update')
 
-#     @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-#     @method_decorator(user_is_doctor)
-#     def dispatch(self, request, *args, **kwargs):
-#         return super().dispatch(self.request, *args, **kwargs)
-
-#     def get(self, request, *args, **kwargs):
-#         try:
-#             self.object = self.get_object()
-#         except Http404:
-#             raise Http404("User doesn't exists")
-#         # context = self.get_context_data(object=self.object)
-#         return self.render_to_response(self.get_context_data())
-
-#     def get_object(self, queryset=None):
-#         obj = self.request.user
-#         print(obj)
-#         if obj is None:
-#             raise Http404("Patient doesn't exists")
-#         return obj
 
 
 class AppointmentCreateView(CreateView):
@@ -377,14 +260,7 @@ class AppointmentDeleteView(DeleteView):
 """
 
 
-# class HomePageView(ListView):
-#     paginate_by = 9
-#     model = Appointment
-#     context_object_name = 'home'
-#     template_name = "home.html"
 
-#     def get_queryset(self):
-#         return self.model.objects.all().order_by('-id')
 
 
 class ServiceView(TemplateView):
@@ -404,54 +280,6 @@ class SearchView(ListView):
                                         #  name__contains=self.request.GET['name']
                                          )
 
-# class UpdatePatient(LoginRequiredMixin, UpdateView):
-#     model = Patient
-#     form_class = PatientProfileUpdateForm
-#     success_url = reverse_lazy("accounts:patient-profile-update")
-
-#     def post(self, request, *args, **kwargs):
-#         response = super().post(request, *args, **kwargs)
-#         if response.status_code == 302:
-#             # if int(request.POST.get("quantity")) == 0:
-#             #     productincart = self.get_object()
-#             #     productincart.delete()
-#             return response
-#         else:
-#             messages.error(request, "error in quantity")
-#             return redirect(reverse_lazy("accounts:patient-profile-update"))   
-
-# def search(request):
-#     info={}
-#     # qs=Appointment.objects.all()
-#     # d_add = DoctorAdditional.objects.all()
-#     # ms= qs.user.all()
-#     qs = Appointment.objects.all()
-
-#     name_contains_query=request.GET.get('name')
-#     specialist_contains_query=request.GET.get('your_expertise')
-#     city_contains_query=request.GET.get('location')
-#     if name_contains_query!='' and name_contains_query is not None:
-#         ms=Doctor.objects.get(name__icontains=name_contains_query)
-#         qs=Appointment.objects.get(user=ms.id)
-#         info={'appointment':qs}
-
-#     if specialist_contains_query!='' and specialist_contains_query is not None:
-#         d_add=DoctorAdditional.objects.get(user=ms.id ,your_expertise__icontains=specialist_contains_query)
-#         qs=Appointment.objects.filter(user=d_add.user.id)
-#         info={'appointment':qs}
-        
-        
-      
-#     if city_contains_query!='' and city_contains_query is not None:
-#         d_add1=DoctorAdditional.objects.get(id=d_add.id,location__icontains=city_contains_query)
-#         # qs=Appointment.objects.all()
-
-#         qs=Appointment.objects.filter(user=d_add1.user.id)
-    
-#         info={'appointment':qs}
-
-    
-#     return render(request,"appointment/search.html",info)
 
 
 
@@ -469,22 +297,15 @@ def payment(request):
         cart = TakeAppointment.objects.get(user = request.user)
         products_in_cart =Appointment.objects.filter(id= cart.appointment.id)
 
-        # products_in_cart = Appointment.objects.filter(id = id)
-        # products_in_cart = Appointment.objects.filter(id = id)
+        
         final_price = 0
     
-        # try:
-        #     if(len(products_in_cart)>0):
-                # order = Order.objects.create(user = request.user, total_amount = 0)
-                # order.save()
+       
         order = Order.objects.create(user = request.user, total_amount = 0)
         for product in products_in_cart:
             final_price = product.price
             product_in_order = PatientAppointmentTrack.objects.create(appointment = order,  user=request.user, price = product.price)
-        #         else:
-        #            return HttpResponse("No product in cart")
-        # except:
-        #     return HttpResponse("No product in cart")
+       
         
         order.total_amount = final_price
         order.save()
