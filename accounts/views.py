@@ -77,12 +77,7 @@ class Patient_register(CreateView,SuccessMessageMixin):
                 return self.render_to_response({'form':form})
         else:
             return response
-    # def form_valid(self, form):
-    #     user = form.save()
-    #     login(self.request, user)
-    #     return redirect('/')
-# template_name = 'firstapp/registerbasicuser.html'
-#     form_class = RegistrationForm
+    
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -156,29 +151,7 @@ class Doctor_register(CreateView):
         else:
             return response
 
-    # def form_valid(self, form):
-    #     user = form.save()
-    #     login(self.request, user)
-    #     return redirect('/')
-
-
-# def login_request(request):
-#     if request.method=='POST':
-#         form = AuthenticationForm(data=request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data.get('email')
-#             password = form.cleaned_data.get('password')
-#             user = authenticate(email=email, password=password)
-#             if user is not None :
-#                 login(request,user)
-#                 return redirect('/')
-#             else:
-#                 messages.error(request,"Invalid email or password")
-#         else:
-#                 messages.error(request,"Invalid email or password")
-#     return render(request, '../templates/login.html',
-#     context={'form':AuthenticationForm()})
-
+   
 def logout_view(request):
     logout(request)
     return redirect('/')
@@ -186,8 +159,7 @@ def logout_view(request):
 class LoginViewUser(LoginView):
     template_name = "login.html"
 
-# class LogoutViewUser(LogoutView):
-#     success_url = reverse_lazy('index')   
+
 
 class HomePageView(ListView):
     paginate_by = 9
@@ -197,11 +169,4 @@ class HomePageView(ListView):
 
     def get_queryset(self):
         return self.model.objects.all().order_by('-id')
-# class Home1PageView(ListView):
-#     paginate_by = 9
-#     model = Appointment
-#     context_object_name = 'home'
-#     template_name = "index1.html"
 
-#     def get_queryset(self):
-#         return self.model.objects.all().order_by('-id')
