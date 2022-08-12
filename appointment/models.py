@@ -47,12 +47,9 @@ class Order(models.Model):
 
 class Appointment(models.Model):
     user = models.OneToOneField(Doctor,on_delete=models.CASCADE)
-    # appointment_id = models.AutoField(primary_key=True)
-    # user_additional = models.ForeignKey(DoctorAdditional,on_delete=models.CASCADE)
-    # full_name = models.CharField(max_length=100)
+    
     image = models.ImageField(null=True, blank=True)
-    # image = models.ImageField(upload_to='media',default='media/about.jpg')  
-    # location = models.CharField(max_length=100)
+    
     start_time = models.CharField(max_length=10)
     end_time = models.CharField(max_length=10)
     qualification_name = models.CharField(max_length=100)
@@ -80,17 +77,7 @@ class PatientAppointmentTrack(models.Model):
     # class Meta:
     #     unique_together = (('order', 'user'),)
     user = models.OneToOneField(Patient,on_delete=models.CASCADE)
-    # # appointment_id = models.AutoField(primary_key=True)
-    # # user_additional = models.ForeignKey(DoctorAdditional,on_delete=models.CASCADE)
-    # # full_name = models.CharField(max_length=100)
-    # image = models.ImageField(null=True, blank=True)
-    # # image = models.ImageField(upload_to='media',default='media/about.jpg')  
-    # # location = models.CharField(max_length=100)
-    # start_time = models.CharField(max_length=10)
-    # end_time = models.CharField(max_length=10)
-    # qualification_name = models.CharField(max_length=100)
-    # institute_name = models.CharField(max_length=100)
-    # hospital_name = models.CharField(max_length=100)
+    
     price= models.FloatField(max_length=10, default='500')
     # department = models.CharField(choices=department, max_length=100)
     created_at = models.DateTimeField(default=timezone.now)
