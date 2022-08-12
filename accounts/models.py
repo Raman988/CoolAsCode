@@ -23,34 +23,7 @@ from django.db.models import Q
 
 
 
-# DEPARTMENT_CHOICES= (
-#     ('Dentistry', "Dentistry"),
-#     ('Cardiology', "Cardiology"),
-#     ('ENT Specialists', "ENT Specialists"),
-#     ('Astrology', 'Astrology'),
-#     ('Neuroanatomy', 'Neuroanatomy'),
-#     ('Blood Screening', 'Blood Screening'),
-#     ('Eye Care', 'Eye Care'),
-#     ('Physical Therapy', 'Physical Therapy'),
-# )
 
-
-# class User(AbstractUser):
-#     is_Patient = models.BooleanField(default=False)
-#     is_Doctor = models.BooleanField(default=False)
-
-# class Patient(models.Model):
-#     user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
-#     phone_number = models.CharField(max_length=20)
-#     age = models.CharField(max_length=20)
-#     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
-
-# class Doctor(models.Model):
-#     user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
-#     phone_number = models.CharField(max_length=20)
-#     location = models.CharField(max_length=20)
-#     your_expertise =  models.CharField(max_length=20)
-#     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
 
 class LowercaseEmailField(models.EmailField):
     """
@@ -87,28 +60,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_Patient = models.BooleanField(default=True)
     is_Doctor = models.BooleanField(default = False)
 
-    # type = (
-    #     (1, 'Doctor'),
-    #     (2, 'Patient')
-    # )
-    # user_type = models.IntegerField(choices = type, default=1)
-
-    #usertype = models.ManyToManyField(UserType)
-
-    # class Types(models.TextChoices):
-    #     DOCTOR = "Doctor", "DOCTOR"
-    #     PATIENT = "Patient", "PATIENT"
-    
-    # Types = (
-    #     (1, 'Doctor'),
-    #     (2, 'Patient')
-    # )
-    # type = models.IntegerField(choices=Types, default=2)
-
-    # default_type = Types.PATIENT
-
-    #type = models.CharField(_('Type'), max_length=255, choices=Types.choices, default=default_type)
-    # type = MultiSelectField(choices=Types.choices, default=[], null=True, blank=True)
+   
 
 
 
@@ -121,14 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
     
     
-    #place here
-        # if not the code below then taking default value in User model not in proxy models
-    # def save(self, *args, **kwargs):
-    #     if not self.id:
-    #         #self.type = self.default_type
-    #         self.type.append(self.default_type)
-    #     return super().save(*args, **kwargs)
-
+  
 
 # Model Managers for proxy models
 class DoctorManager(models.Manager):
@@ -191,17 +136,9 @@ class Patient(CustomUser):
 class PatientAdditional(models.Model):
     user = models.OneToOneField(Patient, on_delete = models.CASCADE)
     age = models.CharField(max_length=20)
-    # role = models.CharField(max_length=20, default="patient")
-    
-    # patient_id = models.AutoField(primary_key=True)
-    # gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
-
+   
 class DoctorAdditional(models.Model):
     user = models.OneToOneField(Doctor, on_delete = models.CASCADE)
     location = models.CharField(max_length=20)
     your_expertise =  models.CharField(max_length=20)
-    # role = models.CharField(max_length=20, default="doctor")
-    
-    # doctor_id = models.AutoField(primary_key=True)
-
-    # gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
+   
