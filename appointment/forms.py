@@ -13,17 +13,9 @@ class CreateAppointmentForm1(forms.ModelForm):
         self.fields['qualification_name'].label = "Qualification"
         self.fields['institute_name'].label = "Institute"
 
-        # self.fields['full_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Full Name',
-        #     }
-        # )
+       
 
-        # self.fields['department'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Select Your Service',
-        #     }
-        # )
+       
 
         self.fields['start_time'].widget.attrs.update(
             {
@@ -35,11 +27,7 @@ class CreateAppointmentForm1(forms.ModelForm):
                 'placeholder': 'Ex: 5 PM',
             }
         )
-        # self.fields['location'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Ex : Uttara, Dhaka',
-        #     }
-        # )
+       
 
         self.fields['hospital_name'].widget.attrs.update(
             {
@@ -69,19 +57,7 @@ class CreateAppointmentForm1(forms.ModelForm):
         #    'location',
                   'hospital_name', 'qualification_name', 'institute_name']
 
-    # def is_valid(self):
-    #     valid = super(CreateAppointmentForm, self).is_valid()
-
-    #     # if already valid, then return True
-    #     if valid:
-    #         return valid
-    #     return valid
-
-    # def save(self, commit=True):
-    #     appointment = super(CreateAppointmentForm, self).save(commit=False)
-    #     if commit:
-    #         appointment.save()
-    #     return appointment
+  
 class CreateAppointmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateAppointmentForm, self).__init__(*args, **kwargs)
@@ -93,18 +69,7 @@ class CreateAppointmentForm(forms.ModelForm):
         self.fields['qualification_name'].label = "Qualification"
         self.fields['institute_name'].label = "Institute"
 
-        # self.fields['full_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Full Name',
-        #     }
-        # )
-
-        # self.fields['department'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Select Your Service',
-        #     }
-        # )
-
+      
         self.fields['start_time'].widget.attrs.update(
             {
                 'placeholder': 'Ex : 9 AM',
@@ -115,11 +80,7 @@ class CreateAppointmentForm(forms.ModelForm):
                 'placeholder': 'Ex: 5 PM',
             }
         )
-        # self.fields['location'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Ex : Uttara, Dhaka',
-        #     }
-        # )
+        
 
         self.fields['hospital_name'].widget.attrs.update(
             {
