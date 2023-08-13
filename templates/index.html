@@ -6,29 +6,30 @@
 {% block content %}
 
 
-    <div class="breadcumb-area bg-img bg-gradient"  style="background-image: url('{% static 'img/bg-img/14.jpg' %}');">
+<div class="breadcumb-area bg-img bg-gradient" style="background-image: url('{% static 'img/bg-img/14.jpg' %}');">
     <div class="container h-100">
-      <div class="row h-100 align-items-center">
-        <div class="col-12">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
 
-             <form id="job-main-form" method="get" action="{% url 'appointment:search' %}" class="search-doctor-form">
+                <form id="job-main-form" method="get" action="{% url 'appointment:search' %}"
+                    class="search-doctor-form">
                     <div class="row mb-5">
 
 
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                            <input type="text" id="location" name="location"
-                                   class="form-control form-control-lg" placeholder="Any Location ?  Ex : Uttara, Dhaka">
+                            <input type="text" id="location" name="location" class="form-control form-control-lg"
+                                placeholder="Any Location ?  Ex : Uttara, Dhaka">
                         </div>
                         {% comment %} <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                            <input type="text" id="name" name="name"
-                                   class="form-control form-control-lg" placeholder="Name">
+                            <input type="text" id="name" name="name" class="form-control form-control-lg"
+                                placeholder="Name">
                         </div> {% endcomment %}
 
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
                             <input type="text" id="your_expertise" name="your_expertise"
-                                   class="form-control form-control-lg" placeholder="Specialists">
+                                class="form-control form-control-lg" placeholder="Specialists">
                             {% comment %} <select id="department" name="your_expertise" class="form-control">
-                                 <option style="display: none;" >Select Your Service</option>
+                                <option style="display: none;">Select Your Service</option>
                                 <option>Cardiology</option>
                                 <option>Dentistry</option>
                                 <option>ENT Specialists</option>
@@ -42,127 +43,350 @@
 
 
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                            <button type="submit" class="btn btn-info btn-lg btn-block text-black btn-search" style ="font-size:90%; width: 20%; height :90%"><i
-                                    class="fa fa-search"></i>
+                            <button type="submit" class="btn btn-info btn-lg btn-block text-black btn-search"
+                                style="font-size:90%; width: 20%; height :90%"><i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
                 </form>
 
 
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+<section class="section section-specialities">
+    <div class="container-fluid">
+        <div class="section-header text-center">
+            <h2>Clinic and Specialities</h2>
+            <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <!-- Slider -->
+                <div class="specialities-slider slider">
+
+                    <!-- Slider Item -->
+                    <div class="speicality-item text-center">
+                        <div class="speicality-img">
+                            <img src="{% static 'img/img/specialities/specialities-01.png'%}" class="img-fluid"
+                                alt="Speciality">
+                            <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        </div>
+                        <p>Urology</p>
+                    </div>
+                    <!-- /Slider Item -->
+
+                    <!-- Slider Item -->
+                    <div class="speicality-item text-center">
+                        <div class="speicality-img">
+                            <img src="{% static 'img/img/specialities/specialities-02.png'%}" class="img-fluid"
+                                alt="Speciality">
+                            <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        </div>
+                        <p>Neurology</p>
+                    </div>
+                    <!-- /Slider Item -->
+
+                    <!-- Slider Item -->
+                    <div class="speicality-item text-center">
+                        <div class="speicality-img">
+                            <img src="{% static 'img/img/specialities/specialities-03.png'%}" class="img-fluid"
+                                alt="Speciality">
+                            <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        </div>
+                        <p>Orthopedic</p>
+                    </div>
+                    <!-- /Slider Item -->
+
+                    <!-- Slider Item -->
+                    <div class="speicality-item text-center">
+                        <div class="speicality-img">
+                            <img src="{% static 'img/img/specialities/specialities-04.png'%}" class="img-fluid"
+                                alt="Speciality">
+                            <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        </div>
+                        <p>Cardiologist</p>
+                    </div>
+                    <!-- /Slider Item -->
+
+                    <!-- Slider Item -->
+                    <div class="speicality-item text-center">
+                        <div class="speicality-img">
+                            <img src="{% static 'img/img/specialities/specialities-05.png'%}" class="img-fluid"
+                                alt="Speciality">
+                            <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        </div>
+                        <p>Dentist</p>
+                    </div>
+                    <!-- /Slider Item -->
+
+                </div>
+                <!-- /Slider -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% comment %} <section class="dentist-area section-padding-50-0">
+
+    <div class="container"> {% endcomment %}
 
 
 
-    <section class="dentist-area section-padding-50-0">
-
-        <div class="container">
 
 
 
 
+        {% comment %} <div class="row">
+
+            <div class="col-12">
+                <div class="section-heading text-center">
+
+
+                    <h3>We have found {{ appointment.count }} doctor/s. </h3>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div> {% endcomment %}
+
+        {% comment %} <div class="row"> {% endcomment %}
+
+
+            {% comment %} {% for apt in home %} {% endcomment %}
+            {% comment %} {% for i in d_add %} {% endcomment %}
+            {% comment %} {% for j in ds %} {% endcomment %}
+
+            <!-- Single Dentist Area -->
+            {% comment %} <div class="col-12 col-sm-6 col-md-4">
+                <div class="single-dentist-area mb-100">
+                    <img style="height: 500px; width: 600px" src="{{ apt.user.showAppointment.get_image_url }}" alt="">
+                    <!-- Dentist Content -->
+                    <div class="dentist-content">
+                        <!-- Social Info -->
+                        <div class="dentist-social-info">
+
+                        </div>
+                        <!-- Dentist Info -->
+                        <div class="dentist-info bg-dark bg-gradient-overlay">
+                            {% if request.user.is_authenticated and request.user.is_Patient %}
+                            <h5>{{ apt.user.name }}</h5>
+                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+
+                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                                in {{ apt.hospital_name }}</p>
+                            <p>
+                                AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
+                                <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
+                                    Appointment</a>
+
+                            </p>
 
 
 
-            {% comment %} <div class="row">
+                            {% elif request.user.is_authenticated and request.user.is_Doctor%}
 
-                <div class="col-12">
-                    <div class="section-heading text-center">
+                            <h5>{{ apt.user.name }}</h5>
+                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                                in {{ apt.hospital_name }}</p>
+                            <p>AT {{ apt.user.showAdditional.location }}</p>
+
+                            {% else %}
+
+                            <h5>{{ apt.user.name }}</h5>
+                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
+                                in {{ apt.hospital_name }}</p>
+                            <p>
+                                AT {{ apt.user.showAdditional.location }} </p>
 
 
-                        <h3>We have found {{ appointment.count }} doctor/s. </h3>
-                        <div class="line"></div>
+                            {% endif %}
+
+                        </div>
                     </div>
                 </div>
-            </div> {% endcomment %}
-
-            <div class="row">
-
-
-                {% for apt in home %}
-                {% comment %} {% for i in d_add %} {% endcomment %}
-                {% comment %} {% for j in ds %} {% endcomment %}
-
-                    <!-- Single Dentist Area -->
-                    <div class="col-12 col-sm-6 col-md-4">
-                        <div class="single-dentist-area mb-100">
-                            <img style="height: 500px; width: 600px" src="{{ apt.user.showAppointment.get_image_url }}" alt="">
-                            <!-- Dentist Content -->
-                            <div class="dentist-content">
-                                <!-- Social Info -->
-                                <div class="dentist-social-info">
-
-                                </div>
-                                <!-- Dentist Info -->
-                                <div class="dentist-info bg-dark bg-gradient-overlay">
-                                    {% if request.user.is_authenticated and request.user.is_Patient %}
-                    <h5>{{ apt.user.name }}</h5>
-                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-
-                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                        in {{ apt.hospital_name }}</p>
-                    <p>
-                        AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
-                        <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
-                            Appointment</a>
-
-                    </p>
-                    {% elif request.user.is_authenticated and request.user.is_Doctor%}
-
-                    <h5>{{ apt.user.name }}</h5>
-                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                        in {{ apt.hospital_name }}</p>
-                    <p>AT {{ apt.user.showAdditional.location }}</p>
-
-                    {% else %}
-
-                    <h5>{{ apt.user.name }}</h5>
-                    <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                    <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-                    <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                        in {{ apt.hospital_name }}</p>
-                    <p>
-                        AT {{ apt.user.showAdditional.location }} </p>
+            </div>
+            {% endfor %}
 
 
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
                     {% endif %}
 
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+
+        </div>
+
+    </div>
+</section> {% endcomment %}
+{% comment %}
+<h5></h5>
+<p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
+<p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+
+<p>Available {{ apt.start_time }} to {{ apt.end_time }}
+    in {{ apt.hospital_name }}</p>
+<p>
+    AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
+    <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
+        Appointment</a>
+
+</p> {% endcomment %}
+{% if request.user.is_authenticated and request.user.is_Patient %}
+<div class="container">
+    <div class="col-lg-5">
+        <div class="doctor-slider slider">
+            {% for apt in home %}
+
+            <!-- Doctor Widget -->
+            <div class="profile-widget">
+                <div class="doc-img">
+                    <a href="doctor-profile.html">
+                        <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
+                    </a>
+                    <a href="javascript:void(0)" class="fav-btn">
+                        <i class="far fa-bookmark"></i>
+                    </a>
+                </div>
+                <div class="pro-content">
+                    <h3 class="title">
+                        <a href="doctor-profile.html">{{ apt.user.name }}</a>
+                        <i class="fas fa-check-circle verified"></i>
+                    </h3>
+                    <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                    <div class="rating">
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <span class="d-inline-block average-rating">(17)</span>
+                    </div>
+                    <ul class="available-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i> {{ apt.user.showAdditional.location }}
+                        </li>
+                        <li>
+                            <i class="far fa-clock"></i> Available on {{ apt.start_time }} to {{ apt.end_time }}
+                            in {{ apt.hospital_name }}
+                        </li>
+                        <li>
+                            <i class="far fa-money-bill-alt"></i> $300 - $1000
+                            <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                        </li>
+                    </ul>
+                    <div class="row row-sm">
+                        <div class="col-6">
+                            <a href="{% url 'appointment:docdetail' id=apt.id %}" class="btn view-btn">View Profile</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'appointment:doctor-detail' id=apt.id %}" class="btn book-btn">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+             {% elif request.user.is_authenticated and request.user.is_Doctor%}
+            
+             {% comment %} <div class="container"></div> {% endcomment %}
+           {% else %}
+           <div class="container">
+            <div class="col-lg-5">
+                <div class="doctor-slider slider">
+                    {% for apt in home %}
+        
+                    <!-- Doctor Widget -->
+                    <div class="profile-widget">
+                        <div class="doc-img">
+                            <a href="doctor-profile.html">
+                                <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
+                            </a>
+                            <a href="javascript:void(0)" class="fav-btn">
+                                <i class="far fa-bookmark"></i>
+                            </a>
+                        </div>
+                        <div class="pro-content">
+                            <h3 class="title">
+                                <a href="doctor-profile.html">{{ apt.user.name }}</a>
+                                <i class="fas fa-check-circle verified"></i>
+                            </h3>
+                            <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                            <div class="rating">
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <span class="d-inline-block average-rating">(17)</span>
+                            </div>
+                            <ul class="available-info">
+                                <li>
+                                    <i class="fas fa-map-marker-alt"></i> {{ apt.user.showAdditional.location }}
+                                </li>
+                                <li>
+                                    <i class="far fa-clock"></i> Available on {{ apt.start_time }} to {{ apt.end_time }}
+                                    in {{ apt.hospital_name }}
+                                </li>
+                                <li>
+                                    <i class="far fa-money-bill-alt"></i> $300 - $1000
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                </li>
+                            </ul>
+                            <div class="row row-sm">
+                                <div class="col-6">
+                                    <a href="doctor-profile.html" class="btn view-btn">View Profile</a>
                                 </div>
+                                {% comment %} <div class="col-6">
+                                    <a href="{% url 'appointment:doctor-detail' id=apt.id %}" class="btn book-btn">Book Now</a>
+                                </div> {% endcomment %}
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                    {%endfor%}
+                    {% endif %}
             
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
 
-                <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-        {% endif %}
-    </span>
-                </div>
-
-
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                    {% endif %}
+                </span>
             </div>
-
         </div>
-    </section>
+    </div>
+</div>
+
 
 
 {% endblock %}

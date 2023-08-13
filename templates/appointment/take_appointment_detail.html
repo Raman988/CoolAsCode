@@ -1,43 +1,125 @@
-
 {% extends 'base.html' %}
 
-{% comment %} {% extends 'base.html' %}
-
-
-{% load bootstrap %}
-
-{% block title %} Take Appointment {% endblock %}
+{% load static %}
 
 {% block content %}
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row justify-content-center">
+<head>
+  <style>
+    #login-card {
+      width: 500px;
+      border-radius: 10px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f8f8f8;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-                <div class="col-lg-5 mb-5 mb-lg-0">
-                    <center> <h3>Take Appointment </h3></center>
+    #body {
+      background-image: url("{% static 'img/2.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
 
-                    <form action="" method="POST" >{% csrf_token %}
+    .form-title {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
 
-                        {{ form|bootstrap }}
+    .form-label {
+      font-weight: bold;
+    }
 
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <input type="submit" value="Submit" class="btn btn-primary btn-md text-white">
-                            </div>
-                        </div>
+    .form-control {
+      margin-bottom: 20px;
+    }
 
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-                    </form>
-                </div>
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <title>Take Appointment</title>
+</head>
+{% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
 
-            </div>
+<body id="body">
+
+  <div id="login-card" class="card">
+    <div class="card-body">
+      <h2 class="form-title">Take Appointment</h2>
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label class="form-label" for="exampleFormControlTextarea1">Any Queries</label>
+          <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="birthday">Date:</label>
+          <input type="date" id="birthday" name="date" class="form-control">
         </div>
 
-{% endblock %} {% endcomment %}
+        <div class="form-group">
+          <label class="form-label" for="time">Time:</label>
+          <select name="time" id="time" class="form-control">
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 AM">12:00 AM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <!-- Add more time slots as needed -->
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
+{% endblock %}
+
+
+
+{% comment %} <div class="mb-3">
+          <label for="appt">Time:(HH:MM)</label>
+          <br>
+          <input type="text" id="appt" name="time">
+        </div> {% endcomment %}
+
+{% comment %} 
+{% extends 'base.html' %}
+
+
 
 {% load static %}
 {% block content %}
- {% comment %} {% load widget_tweaks %} {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +134,7 @@
         width: 700px;
         border-radius: 25px;
         margin: 150px auto;
-        font-size: 150% ;
+        font-size: 100% ;
         font-style: normal;
   
       }
@@ -70,116 +152,7 @@
          </div>
      {% endfor %}
  {% endif %}
-{% comment %} <body id="body"> {% endcomment %}
-{% comment %}
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 mx-auto"  id="card">
-          <div class="card" id="cardb">
-            <div class="card-header text-black">
-              <h2>Doctor Registration</h2>
-            </div>
-            <div class="card-body">
-              <form action="" method="POST">{% csrf_token %}
-            {% for field in form %}
-            {% if field.name == 'appointment' %}
-            
-             
-             <div class="form-group">
-                <label for="id_{{ field.name }}">{{doctor.appointment}}</label> {% endcomment %}
-                {% comment %} <input type="{{ field.field.widget.input_type }}" class="form-control" name="{{ field.name }}"
-                  id="id_{{ field.name }}" placeholder="{{ field.field.widget.attrs.placeholder }}" value = {{ doctor.appointment}}>
-                {% for error in field.errors %}
-                <span style="color:red">{{ error }}</span>
-                {% endfor %} {% endcomment %}
-            {% comment %} </div> 
 
-            {% else %}
-
-            <div class="form-group">
-              <label for="id_{{ field.name }}">{{ field.label }}</label>
-              <input type="{{ field.field.widget.input_type }}" class="form-control" name="{{ field.name }}"
-                id="id_{{ field.name }}" placeholder="{{ field.field.widget.attrs.placeholder }}">
-              {% for error in field.errors %}
-              <span style="color:red">{{ error }}</span>
-              {% endfor %}
-            </div>
-
-            {% endif %}
-            {% endfor %}
-
-            <div class="row form-group">
-              <div class="col-md-12">
-                <input type="submit" value="Register" class="btn btn-primary btn-md text-white">
-              </div>
-            </div>
-
-
-          </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-  </section>  {% endcomment %}
-  {% comment %} <section>
-    <div class="container">
-
-      <div class="row justify-content-center">
-
-        <div class="col-lg-5 mb-5 mb-lg-0">
-          <center>
-            <h3>Doctor Registration</h3>
-          </center>
-
-          <form action="" method="POST">{% csrf_token %}
-            {% for field in form %}
-            {% if field.name == 'gender' %}
-
-            <div class="form-group">
-              <label for="gender">Gender</label>
-              <br>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="Male gender" value="Male">
-                <label class="form-check-label" for="Male">Male</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="FeMale" value="FeMale">
-                <label class="form-check-label" for="FeMale">FeMale</label>
-              </div>
-            </div>
-
-            {% else %}
-
-            <div class="form-group">
-              <label for="id_{{ field.name }}">{{ field.label }}</label>
-              <input type="{{ field.field.widget.input_type }}" class="form-control" name="{{ field.name }}"
-                id="id_{{ field.name }}" placeholder="{{ field.field.widget.attrs.placeholder }}">
-              {% for error in field.errors %}
-              <span style="color:red">{{ error }}</span>
-              {% endfor %}
-            </div>
-
-            {% endif %}
-            {% endfor %}
-
-            <div class="row form-group">
-              <div class="col-md-12">
-                <input type="submit" value="Register" class="btn btn-primary btn-md text-white">
-              </div>
-            </div>
-
-
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  {% comment %} {% endblock %} {% endcomment %}
-  {% comment %} {% for apt in appointment%} {% endcomment %}
   <body id="body">
 
     <div id="login-card" class="card">
@@ -187,19 +160,7 @@
         <h2 class="text-center">Take Appointment</h2>
         <br>
     <form method="POST" >{% csrf_token %}
-      {% comment %} {% endfor %} {% endcomment %}
-      {% comment %} <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" name="full_name" class="form-control" id="full_name" placeholder="Your Name">
-      </div> {% endcomment %}
-      {% comment %} <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-      </div> {% endcomment %}
-      {% comment %} <div class="mb-3">
-        <label for="phone" class="form-label">Phone No.</label>
-        <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Your Phone Number">
-      </div> {% endcomment %}
+      
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Any Queries</label>
         <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -220,7 +181,6 @@
   <input type="text" id="appt" name="time">
 </div>
 
-  {% comment %} <input type="submit"> {% endcomment %}
   <div style ="text-align: center;">
       <button type="submit" class="btn btn-primary" style = "font-size : 105%; ">Submit</button>
 </div>
@@ -230,7 +190,6 @@
 </div>
 </body>
 
-{% comment %} </body> {% endcomment %}
 
 </html> 
-{%endblock%}
+{%endblock%} {% endcomment %}

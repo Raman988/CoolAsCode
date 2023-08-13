@@ -19,12 +19,13 @@ urlpatterns = [
     path('doctor/appointment/', AppointmentListView.as_view(), name='doctor-appointment'),
     path('<pk>/delete/', AppointmentDeleteView.as_view(), name='delete-appointment'),
     path('<pk>/patient/delete', PatientDeleteView.as_view(), name='delete-patient'),
-    path('patient-take-appointment/<pk>', TakeAppointmentView.as_view(), name='take-appointment'),
+    path('patient-take-appointment/', TakeAppointmentView.as_view(), name='take-appointment'),
     path('search/', SearchView.as_view(), name='search'),
     # path('search/', views.search, name='search'),
     path('patient/', PatientListView.as_view(), name='patient-list'),
     path('patients/<id>/', views.doctordetails, name='doctor-detail'),
-    path('detail/', views.DisplayCart.as_view(), name='detail'),
+    path('detail/', views.display_cart, name='detail'),
+    path('doctordetail/<id>/', views.view_doctor_detail, name='docdetail'),
     path('patient/profile/update/<id>/', views.editprofile, name='patient-profile-update'),
     path('doctor/profile/update/<id>/', views.editprofiledoctor, name='doctor-profile-update'),
    # path('patient/profile/update/<id>/', EditPatientProfileView1.as_view(), name='patient-profile-update2'),
@@ -32,7 +33,7 @@ urlpatterns = [
     path('handlerequest/', views.handlerequest, name = 'handlerequest'),
     # Generating Invoice
     path('generateinvoice/<int:pk>/', views.GenerateInvoice.as_view(), name = 'generateinvoice'),
-
+    
     #path('patients/<int:appointment_id>', PatientPerAppointmentView.as_view(), name='patient-list'),
 
 

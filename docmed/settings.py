@@ -140,9 +140,10 @@ USE_TZ = True
 # Email Verification
 EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = "ramanjeengar24@gmail.com"
-EMAIL_HOST_PASSWORD = 'zvyhbtnxrwoofhhr'
-# EMAIL_HOST_PASSWORD = 'Raman@2002'
+EMAIL_HOST_USER = "raman7773536@gmail.com"
+# EMAIL_HOST_PASSWORD = 'zvyhbtnxrwoofhhr'
+EMAIL_HOST_PASSWORD = 'jrcikdkizlvrofuw'
+# EMAIL_HOST_PASSWORD = 'Mukesh@2002'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 

@@ -2,279 +2,146 @@
 <!-- Preloader -->
 <!-- Preloader -->
 
+<style>
+	.nav-profile-photo {
+		display: inline-block;
+		width: 50px;  /* Adjust the width to your desired size */
+		height: 50px;  /* Adjust the height to your desired size */
+		border-radius: 50%;  /* Make the photo circular */
+		object-fit: cover;  /* Maintain the aspect ratio and cover the container */
+		margin-right: 5px;  /* Add some spacing to the right of the photo */
+	  }</style>
+<header class="header">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<span class="bar-icon">
+								<span></span>
+								<span></span>
+								<span></span>
+							</span>
+						</a>
+						<a href="{%url 'accounts:index'%}" class="navbar-brand logo">
+							<img src="{% static 'img/logo1.png' %}" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="{%url 'accounts:index'%}" class="menu-logo">
+								<img src="{% static 'img/logo1.png' %}" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li class="active">
+								<a href="{%url 'accounts:index'%}">Home</a>
+							</li>
+							{% if request.user.is_authenticated and request.user.is_Patient %}
+							<li class="has-submenu">
+								<a href="#">Checkout <i class="fas fa-chevron-down"></i></a>
+								<ul class="submenu">
+									<li><a href="doctor-dashboard.html">Doctor Dashboard</a></li>
+									<li><a href="{% url 'appointment:take-appointment' %}">Appointments</a></li>
+									
+								</ul>
+							</li>	
+							
+							<li>
+								<a href="admin" target="_blank">Admin</a>
+							</li>
+							<li class="login-link">
+								<a href="login.html">{{request.user.name}}</a>
+							</li>
+							{% elif request.user.is_authenticated and request.user.is_Doctor%}
+							
+							<li class="has-submenu">
+								<a href="#">Checkout <i class="fas fa-chevron-down"></i></a>
+								<ul class="submenu">
+									<li><a href="{% url 'appointment:patient-list' %}">Patients</a></li>
+									
+									<li><a href="{% url 'appointment:doctor-profile-update' id=request.user.id  %}">Profile Settings</a></li>
+									
+								</ul>
+							</li>	
+							
+							<li>
+								<a href="admin" target="_blank">Admin</a>
+							</li>
+							<li class="login-link">
+								<a href="login.html">{{request.user.name}}</a>
+							</li>
+							{% else %}
+							
+							<li>
+								<a href="#" target="_blank">About</a>
+							</li>
+							<li>
+								<a href="#" target="_blank">FAQs</a>
+							</li><li>
+								<a href="#" target="_blank">Services</a>
+							</li>
+							<li class="login-link">
+								<a href="login.html">{{request.user.name}}</a>
+							</li>
+							{%endif%}
+						</ul>		 
+					</div>		 
+					<ul class="nav header-navbar-rht">
+						<li class="nav-item contact-item">
+							<div class="header-contact-img">
+								<i class="far fa-hospital"></i>							
+							</div>
+							<div class="header-contact-detail">
+								<p class="contact-header">Contact</p>
+								<p class="contact-info-header"> +91-4544614864</p>
+							</div>
+						</li>
+						{% if request.user.is_authenticated and request.user.is_Patient %}
+						<li class="nav-item">
+							{% if request.user.patientadditional.profile_photo %}
+							<a href="{% url 'appointment:patient-profile-update' id=request.user.id %}" class="nav-profile-photo">
+								<img src="{{ request.user.patientadditional.profile_photo.url }}" alt="Profile Photo" class="nav-profile-photo">
+							</a>
+							{% else %}
+							<a href="{% url 'appointment:patient-profile-update' id=request.user.id %}" class="nav-link header-login">
+								{{ request.user.name }}
+							</a>
+						
+							{% endif %}
+						</li>
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{% url 'accounts:logout' %}">logout</a>
+						</li>
+						{% elif request.user.is_authenticated and request.user.is_Doctor%}
+						<li class="nav-item">
+							{% if request.user.appointment.image %}
+							<a href="{% url 'appointment:doctor-profile-update' id=request.user.id %}" class="nav-profile-photo">
+								<img src="{{ request.user.appointment.image.url }}" alt="Profile Photo" class="nav-profile-photo">
+							</a>
+							{% else %}
+								<a href="{% url 'appointment:doctor-profile-update' id=request.user.id %}" class="nav-link header-login">
+        {{ request.user.name }}
+    </a>
 
-<div id="preloader">
-    <div class="preload-content">
-        <div id="dento-load"></div>
-    </div>
-</div>
+							{% endif %}
+						</li>
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{% url 'accounts:logout' %}">logout </a>
+						</li>
 
-<!-- ***** Header Area Start ***** -->
-<header class="header-area">
-    <!-- Top Header Area -->
-    <div class="top-header-area">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <!-- Top Content -->
-                <div class="col-6 col-md-9 col-lg-8">
-                    <div class="top-header-content">
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Jaipur, Rajasthan"><i
-                                class="fa fa-map-marker"></i> <span>Jaipur, Rajasthan</span></a>
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="info.docmed@gmail.com"><i
-                                class="fa fa-envelope"></i> <span>info.docmed@gmail.com</span></a>
-                    </div>
-                </div>
-                <!-- Top Header Social Info -->
-                <div class="col-6 col-md-3 col-lg-4">
-                    <div class="top-header-social-info text-right">
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i
-                                class="fa fa-facebook"></i></a>
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i
-                                class="fa fa-twitter"></i></a>
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Google Plus"><i
-                                class="fa fa-google-plus"></i></a>
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Linkedin"><i
-                                class="fa fa-linkedin"></i></a>
-                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i
-                                class="fa fa-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top Header End -->
-
-    <!-- Main Header Start -->
-    <div class="main-header-area" style ="height = 50px">
-        <div class="classy-nav-container breakpoint-off"  style ="height:60px">
-            <div class="container" style ="height = 50px;">
-                <!-- Classy Menu -->
-                {% comment %} <nav class="classy-navbar justify-content-between" id="dentoNav">
-
-                    <!-- Logo -->
-                    <a class="nav-brand" href="{% url 'accounts:index' %}"><img src="{% static 'img/logo1.png' %}" alt="">
-                    </a>
-
-                    <!-- Navbar Toggler -->
-                    <div class="classy-navbar-toggler">
-                        <span class="navbarToggler"><span></span><span></span><span></span></span>
-                    </div>
-
-                    <!-- Menu -->
-                    <div class="classy-menu">
-
-                        <!-- Close Button -->
-                        <div class="classycloseIcon">
-                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                        </div>
-
-                        <!-- Nav Start -->
-                        <div class="classynav">
-
-
-                            <ul id="nav">
-
-                                <li><a href="{% url 'accounts:index' %}">Home</a></li>
-
-
-                                <li><a href="{% url 'appointment:service' %}">Services</a></li>
-
-
-                                {% if request.user.is_authenticated and request.user.is_Doctor %}
-
-                                    <li>
-                                        <a href="">
-                                            <span class="glyphicon glyphicon-user">
-                                                    {{ request.user.name }}
-                                            </span>
-                                        </a>
-                                        <ul class="dropdown">
-                                             <li><a href="{% url 'appointment:doctor-profile-update' id=request.user.id  %}"> EDIT PROFILE</a></li> 
-                                            <li><a href="{% url 'appointment:patient-list' %}"> PATIENTS</a></li>
-                                            <li><a href="{% url 'appointment:doctor-appointment' %}">  APPOINTMENTS</a></li>
-                                            <li><a href="{% url 'appointment:doctor-appointment-create' %}"> CREATE APPOINTMENT</a></li>
-                                            <li><a href="{% url 'accounts:logout' %}"> LOGOUT</a></li>
-
-                                        </ul>
-                                    </li>
-
-
-                             {% elif request.user.is_authenticated and request.user.is_Patient  %}
-                                    <li>
-                                        <a href="">
-                                            <span class="glyphicon glyphicon-user">
-                                                    {{ request.user.name }}
-                                            </span>
-                                        </a>
-                                        <ul class="dropdown">
-
-                                            {% comment %} <li><a href="{% url 'accounts:patient-profile-update' pk=request.user.id %}"> EDIT PROFILE</a></li>  {% endcomment %}
-                                            {% comment%}<li><a href="{% url 'appointment:patient-profile-update'  id=request.user.id %}"> EDIT PROFILE</a></li> 
-                                            <li><a href="{% url 'accounts:logout' %}"> LOGOUT</a></li>
-
-                                        </ul>
-                                    </li>
-
-
-
-
-                              {% else %}
-                                    <li><a href="#">Register</a>
-                                        <ul class="dropdown">
-                                            <li><a href="{% url 'accounts:Doctor_register' %}"> DOCTOR</a></li>
-                                            <li><a href="{% url 'accounts:Patient_register' %}"> PATIENT</a></li>
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <a href="{% url 'accounts:login' %}">
-                                            <span class="glyphicon glyphicon-user"> login</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-
-                        </div> {% endcomment %}
-                        <!-- Nav End -->
-                        <nav class="navbar navbar-expand-lg navbar-light " >
-                            <a class="nav-brand" href="{% url 'accounts:index' %}"style = "height :30px ; width :100px ; align : left"><img src="{% static 'img/logo1.png' %}" alt="">
-                            </a>
-                            {% comment %} <a class="navbar-brand" href="#">Docmed</a> {% endcomment %}
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                              <span class="navbar-toggler-icon"></span>
-                            </button>
-                          
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent"style = "padding-left= 10000000px">
-                              <ul class="navbar-nav mr-auto" >
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em">  &nbsp;&nbsp;&nbsp;&nbsp; <span class="sr-only">(current)</span></a>
-                                  </li>
-                                <li class="nav-item active">
-                                  <a class="nav-link" href="{% url 'accounts:index' %}" style="font-size:1.2em">HOME <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;<span class="sr-only">(current)</span></a>
-                                  </li>
-                                <li class="nav-item active">
-                                  <a class="nav-link" href="{% url 'appointment:service' %}" style="font-size:1.2em">SERVICES <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li><li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                  </li>
-                                {% comment %} <li class="nav-item">
-                                  <a class="nav-link" href="#">Link</a>
-                                </li> {% endcomment %}
-                                {% if request.user.is_authenticated and request.user.is_Doctor %}
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#" style="font-size:1.2em">  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                              </li>
-                                <li class="nav-item dropdown"  >
-                                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                        <span class="glyphicon glyphicon-user">
-                                            {{ request.user.name }}
-                                    </span>
-                                    </a>       
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown"align ="right">
-                                            <a class="dropdown-item" href="{% url 'appointment:doctor-profile-update' id=request.user.id  %}"> EDIT PROFILE</a>
-                                            <a class="dropdown-item" href="{% url 'appointment:patient-list' %}"> PATIENTS</a>
-                                            <a class="dropdown-item" href="{% url 'appointment:doctor-appointment' %}">  APPOINTMENTS</a>
-                                            <a class="dropdown-item" href="{% url 'appointment:doctor-appointment-create' %}"> CREATE APPOINTMENT</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{% url 'accounts:logout' %}"> LOGOUT</a>
-
-                                        </div>
-                                    </li>
-
-
-                             {% elif request.user.is_authenticated and request.user.is_Patient  %}
-                                    {% comment %} <li>
-                                        <a href="">
-                                            <span class="glyphicon glyphicon-user">
-                                                    {{ request.user.name }}
-                                            </span>
-                                        </a> {% endcomment %}
-                                        <li class="nav-item active">
-                                            <a class="nav-link" href="#" style="font-size:1.2em"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                        </li>
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="#" style="font-size:1.2em">  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
-                                      </li>
-                                        <li class="nav-item dropdown"  >
-                                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                                <span class="glyphicon glyphicon-user">
-                                                    {{ request.user.name }}
-                                            </span>
-                                            </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" align ="right">
-
-                                            {% comment %} <li><a href="{% url 'accounts:patient-profile-update' pk=request.user.id %}"> EDIT PROFILE</a></li>  {% endcomment %}
-                                            <a class="dropdown-item" href="{% url 'appointment:patient-profile-update'  id=request.user.id %}"> EDIT PROFILE</a>
-                                            <a class="dropdown-item" href="{% url 'accounts:logout' %}"> LOGOUT</a>
-                                        </div>
-                                    </li>
-
-
-
-
-                              {% else %}
-                                    <li class="nav-item dropdown" ><a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                        <span class="glyphicon glyphicon-user">
-                                            Register
-                                    </span>
-                                    </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" align ="right">
-                                            <a class="dropdown-item" href="{% url 'accounts:Doctor_register' %}"> DOCTOR</a>
-                                            <a class="dropdown-item" href="{% url 'accounts:Patient_register' %}"> PATIENT</a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="{% url 'accounts:login' %}">
-                                            <span class="glyphicon glyphicon-user"> login</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                                {% comment %} <li class="nav-item">
-                                  <a class="nav-link disabled" href="#">Disabled</a>
-                                </li> {% endcomment %}
-                              </ul>
-                              {% comment %} <form class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                              </form> {% endcomment %}
-                            </div>
-                          </nav>
-
-
-                    </div>
-
-                    <!-- Booking Now Button -->
-
-
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-
-
-
-
-
+						{%else%}
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{% url 'accounts:Doctor_register' %}">Doctor/signup </a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{% url 'accounts:Patient_register' %}">Patient/signup </a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{% url 'accounts:login' %}">login </a>
+						</li>
+						{%endif%}
+					</ul>
+				</nav>
+			</header>

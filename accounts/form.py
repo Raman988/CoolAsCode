@@ -26,7 +26,7 @@ class PatientSignUpForm(UserCreationForm):
     age = forms.CharField(required=True, max_length=5)
     gender = forms.CharField(required=True,label='Gender', widget=forms.RadioSelect(choices=GENDER_CHOICES))
     # gender = forms.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
-
+    profile_photo = forms.ImageField(required=False)
     class Meta:
         model = Patient
         fields = [
@@ -37,6 +37,7 @@ class PatientSignUpForm(UserCreationForm):
             'phone_number',
             'age',
             'gender',
+            'profile_photo',
         ]
 
 
@@ -66,7 +67,7 @@ class DoctorSignUpForm(UserCreationForm):
     location = forms.CharField(required=True,max_length=50)
     your_expertise = forms.CharField(required=True,max_length=20)
     gender = forms.CharField(required=True,label='Gender', widget=forms.RadioSelect(choices=GENDER_CHOICES))
-
+    
     class Meta:
         model = Doctor
         fields = [
@@ -166,55 +167,22 @@ class PatientProfileUpdateForm(forms.ModelForm):
            ]
 
 class PatientProfileUpdateForm2(forms.ModelForm):
-    # age = forms.CharField(required=True, max_length=5)
-    
+    profile_photo = forms.ImageField(required=False)
+
     def __init__(self, *args, **kwargs):
         super(PatientProfileUpdateForm2, self).__init__(*args, **kwargs)
-        # self.fields['name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Full Name',
-        #     }
-        # )
-        # self.fields['last_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Last Name',
-        #     }
-        # )
-        # self.fields['email'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Email',
-        #     }
-        # )
-        # self.fields['phone_number'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Phone Number',
-        #     }
-        # ) 
-        # self.fields['gender'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'gender',
-        #     }
-        # )
-        # self.request.showAdditional.fields['age'].widget.attrs.update(
-        self.fields['age'].widget.attrs.update(
-            {
-                'placeholder': 'age',
-            }
-        )
+        
+        self.fields['age'].widget.attrs.update({
+            'placeholder': 'Age',
+        })
+        
+        self.fields['profile_photo'].widget.attrs.update({
+            'class': 'form-control-file',
+        })
 
     class Meta:
         model = PatientAdditional
-        # , Patient.showAdditional
-        fields = [
-            # "name",
-        #  "last_name",
-        #   "email",
-        #    "phone_number",
-           "age",
-
-        #    "gender",
-
-           ]
+        fields = ['age', 'profile_photo',]
 
 
 class DoctorProfileUpdateForm(forms.ModelForm):

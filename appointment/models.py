@@ -21,6 +21,7 @@ class Order(models.Model):
         (2, 'FAILURE' ),
         (3, 'PENDING'),
     )
+    
     user = models.ForeignKey(Patient, on_delete=models.CASCADE)
     status = models.IntegerField(choices = status_choices, default=1)
     
@@ -47,22 +48,18 @@ class Order(models.Model):
 
 class Appointment(models.Model):
     user = models.OneToOneField(Doctor,on_delete=models.CASCADE)
-    # appointment_id = models.AutoField(primary_key=True)
-    # user_additional = models.ForeignKey(DoctorAdditional,on_delete=models.CASCADE)
-    # full_name = models.CharField(max_length=100)
+    #
     image = models.ImageField(null=True, blank=True)
-    # image = models.ImageField(upload_to='media',default='media/about.jpg')  
-    # location = models.CharField(max_length=100)
+    #
     start_time = models.CharField(max_length=10)
     end_time = models.CharField(max_length=10)
     qualification_name = models.CharField(max_length=100)
     institute_name = models.CharField(max_length=100)
     hospital_name = models.CharField(max_length=100)
     price= models.FloatField(max_length=10, default='500')
-    # department = models.CharField(choices=department, max_length=100)
+    # 
     created_at = models.DateTimeField(default=timezone.now)
-    # order = models.ForeignKey(Order, on_delete = models.CASCADE)
-
+    # 
     
     @property
     def get_image_url(self):
@@ -77,22 +74,11 @@ class Appointment(models.Model):
 
 
 class PatientAppointmentTrack(models.Model):
-    # class Meta:
-    #     unique_together = (('order', 'user'),)
+    # 
     user = models.OneToOneField(Patient,on_delete=models.CASCADE)
-    # # appointment_id = models.AutoField(primary_key=True)
-    # # user_additional = models.ForeignKey(DoctorAdditional,on_delete=models.CASCADE)
-    # # full_name = models.CharField(max_length=100)
-    # image = models.ImageField(null=True, blank=True)
-    # # image = models.ImageField(upload_to='media',default='media/about.jpg')  
-    # # location = models.CharField(max_length=100)
-    # start_time = models.CharField(max_length=10)
-    # end_time = models.CharField(max_length=10)
-    # qualification_name = models.CharField(max_length=100)
-    # institute_name = models.CharField(max_length=100)
-    # hospital_name = models.CharField(max_length=100)
+    # 
     price= models.FloatField(max_length=10, default='500')
-    # department = models.CharField(choices=department, max_length=100)
+    # 
     created_at = models.DateTimeField(default=timezone.now)
     appointment = models.ForeignKey(Order, on_delete = models.CASCADE)
 
@@ -111,15 +97,10 @@ class PatientAppointmentTrack(models.Model):
 
 
 class TakeAppointment(models.Model):
-    # takeappointment_id = models.AutoField(primary_key=True)
-    # class Meta:
-    #     unique_together = (('patient', 'doctor'),)
+    # 
     user = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    # doctor = models.ManyToManyField(Appointment)
     appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE)
-    # full_name = models.CharField(max_length=100)
     message = models.TextField()
-    # phone_number = models.CharField(max_length=120)
     created_at = models.DateTimeField(default=timezone.now)
     date = models.DateField(auto_now_add=False,default=date.today)
     time = models.TimeField(auto_now_add=False,default=timezone.now)

@@ -1,32 +1,93 @@
-{% extends 'base.html' %}
 
-{% load bootstrap %}
+
+
+
+
+
+{% extends 'base.html' %}
 
 {% block title %} Take Appointment {% endblock %}
 
 {% block content %}
+
+
+<style>
+    /* Custom CSS for the appointment form */
+    .my-custom-form {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .my-custom-form label {
+        font-weight: bold;
+    }
+
+    .my-custom-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .my-custom-form input[type="text"],
+    .my-custom-form input[type="email"],
+    .my-custom-form select,
+    .my-custom-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .my-custom-button {
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .my-custom-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 mb-5 mb-lg-0">
+            <center>
+                <h3>Take Appointment</h3>
+            </center>
 
-<div class="row justify-content-center">
+            <form action="" method="POST" class="my-custom-form">
+                {% csrf_token %}
 
-                <div class="col-lg-5 mb-5 mb-lg-0">
-                    <center> <h3>Take Appointment </h3></center>
+                {% comment %} <div class="form-group">
+                    <label for="{{ form.appointment.id_for_label }}">Choose Your Doctor</label>
+                    {{ form.appointment }}
+                </div> {% endcomment %}
 
-                    <form action="" method="POST" >{% csrf_token %}
-
-                        {{ form|bootstrap }}
-
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <input type="submit" value="Submit" class="btn btn-primary btn-md text-white">
-                            </div>
-                        </div>
-
-
-                    </form>
+                <div class="form-group">
+                    <label for="{{ form.date.id_for_label }}">Date</label>
+                    {{ form.date }}
                 </div>
 
-            </div>
-        </div>
+                <div class="form-group">
+                    <label for="{{ form.time.id_for_label }}">Time</label>
+                    {{ form.time }}
+                </div>
 
+                <div class="form-group">
+                    <label for="{{ form.message.id_for_label }}">Message</label>
+                    {{ form.message }}
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Submit" class="btn btn-primary btn-md text-white my-custom-button">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
