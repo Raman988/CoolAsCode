@@ -144,6 +144,9 @@ EMAIL_HOST_USER = "raman7773536@gmail.com"
 # EMAIL_HOST_PASSWORD = 'zvyhbtnxrwoofhhr'
 EMAIL_HOST_PASSWORD = 'jrcikdkizlvrofuw'
 # EMAIL_HOST_PASSWORD = 'Mukesh@2002'
+# EMAIL_HOST_USER = "xyz@gmail.com"
+# EMAIL_HOST_PASSWORD = 'xyz'
+
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 

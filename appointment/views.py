@@ -28,7 +28,7 @@ class EditPatientProfileView(UpdateView):
     form_class = PatientProfileUpdateForm
     template_name = 'accounts/patient/edit-profile.html'
     success_url = reverse_lazy('accounts:index')
-    # success_message = "Redirect successfully created!"
+  
     context_object_name = 'patient'
 
 
@@ -87,10 +87,7 @@ def editprofile(request, id):
 
 
 def editprofiledoctor(request,id):
-    # context ={}
-    # context1 ={}
- 
-    # fetch the object related to passed id
+   
     obj1=DoctorAdditional.objects.get(user=request.user)
     obj = get_object_or_404(Doctor, id=id)
  
@@ -294,22 +291,15 @@ def payment(request):
         cart = TakeAppointment.objects.get(user = request.user)
         products_in_cart =Appointment.objects.filter(id= cart.appointment.id)
 
-        # products_in_cart = Appointment.objects.filter(id = id)
-        # products_in_cart = Appointment.objects.filter(id = id)
+        
         final_price = 0
     
-        # try:
-        #     if(len(products_in_cart)>0):
-                # order = Order.objects.create(user = request.user, total_amount = 0)
-                # order.save()
+       
         order = Order.objects.create(user = request.user, total_amount = 0)
         for product in products_in_cart:
             final_price = product.price
             product_in_order = PatientAppointmentTrack.objects.create(appointment = order,  user=request.user, price = product.price)
-        #         else:
-        #            return HttpResponse("No product in cart")
-        # except:
-        #     return HttpResponse("No product in cart")
+       
         
         order.total_amount = final_price
         order.save()

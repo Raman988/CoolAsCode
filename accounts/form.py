@@ -41,24 +41,7 @@ class PatientSignUpForm(UserCreationForm):
         ]
 
 
-# class PatientSignUpForm2(forms.ModelForm):
-#     class Meta:
-#         model = PatientAdditional
-#         fields = [
-#             'age',
-#         ]    
-    # @transaction.atomic
-    # def save(self):
-    #     Customuser = super().save(commit=False)
-    #     # user.is_Patient = True
-    #     Customuser.email = self.cleaned_data.get('email')
-    #     Customuser.save()
-    #     patient = Patient.objects.create(user=Customuser)
-    #     # patient.phone_number=self.cleaned_data.get('phone_number')
-    #     patient.age=self.cleaned_data.get('age')
-    #     patient.gender=self.cleaned_data.get('gender')
-    #     patient.save()
-    #     return Customuser
+
 
 class DoctorSignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -83,20 +66,7 @@ class DoctorSignUpForm(UserCreationForm):
         ]
 
 
-    # @transaction.atomic
-    # def save(self):
-    #     Customuser = super().save(commit=False)
-    #     # user.is_Doctor = True
-    #     Customuser.is_staff = True
-    #     Customuser.email = self.cleaned_data.get('email')
-    #     Customuser.save()
-    #     doctor = Doctor.objects.create(user=Customuser)
-    #     doctor.phone_number=self.cleaned_data.get('phone_number')
-    #     doctor.location=self.cleaned_data.get('location')
-    #     doctor.gender=self.cleaned_data.get('gender')
-    #     doctor.your_expertise=self.cleaned_data.get('your_expertise')
-    #     doctor.save()
-    #     return Customuser
+    
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -114,7 +84,7 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class PatientProfileUpdateForm(forms.ModelForm):
-    # age = forms.CharField(required=True, max_length=5)
+   
 
 
     def __init__(self, *args, **kwargs):
@@ -125,11 +95,7 @@ class PatientProfileUpdateForm(forms.ModelForm):
                 'placeholder': 'Enter Full Name',
             }
         )
-        # self.fields['last_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Last Name',
-        #     }
-        # )
+      
         self.fields['email'].widget.attrs.update(
             {
                 'placeholder': 'Email',
@@ -194,11 +160,7 @@ class DoctorProfileUpdateForm(forms.ModelForm):
                 'placeholder': 'Enter Full Name',
             }
         )
-        # self.fields['last_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Last Name',
-        #     }
-        # )
+       
         self.fields['email'].widget.attrs.update(
             {
                 'placeholder': 'Email',
@@ -214,16 +176,7 @@ class DoctorProfileUpdateForm(forms.ModelForm):
                 'placeholder': 'gender',
             }
         )
-        # self.fields['your_expertise'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'your_expertise',
-        #     }
-        # )
-        # self.fields['location'].widget.attrs.update(
-        #            {
-        #                'placeholder': 'location',
-        #            }
-            #    )
+       
        
     class Meta:
         model = Doctor
@@ -241,31 +194,7 @@ class DoctorProfileUpdateForm2(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DoctorProfileUpdateForm2, self).__init__(*args, **kwargs)
-        # self.fields['name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Full Name',
-        #     }
-        # )
-        # self.fields['last_name'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Enter Last Name',
-        #     }
-        # )
-        # self.fields['email'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Email',
-        #     }
-        # )
-        # self.fields['phone_number'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'Phone Number',
-        #     }
-        # ) 
-        # self.fields['gender'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'gender',
-        #     }
-        # )
+      
         self.fields['your_expertise'].widget.attrs.update(
             {
                 'placeholder': 'your_expertise',

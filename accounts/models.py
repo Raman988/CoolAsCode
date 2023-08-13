@@ -74,7 +74,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
   
 
-
 # Model Managers for proxy models
 class DoctorManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
