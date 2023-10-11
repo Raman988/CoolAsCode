@@ -91,8 +91,32 @@
       font-style: normal;
 
     }
-    #body {
+    {% comment %} #body {
     background-color:  #b2b9c2;
+    } {% endcomment %}
+    .btn-circle {
+      border-radius: 50%;
+      width: 50px; /* Adjust the width and height as needed */
+      height: 50px;
+      text-align: center;
+      padding: 6px;
+      font-size: 24px;
+      display: inline-block;
+    }
+    
+    /* Additional styles for icon colors, if needed */
+    .btn-danger .fa-google {
+      color: white; /* Customize the color */
+    }
+    
+    .btn-info .fa-linkedin {
+      color: white; /* Customize the color */
+    }
+    #body {
+      background-image: url("{% static 'img/2.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
     }
     
   </style>
@@ -122,9 +146,11 @@
             Forgot Your Password?
         </a>
         </div>
-        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger"  style ="font-size : 105%"><i class="fa fa-google"></i>&emsp;Login with Google</a>
-        <a href="{% url 'social:begin' 'linkedin-oauth2' %}" class="btn btn-info" style ="font-size : 105%"><i class="fa fa-linkedin"v></i>&emsp;Login with linkedin</a>
-
+        <div class="d-flex justify-content-center">
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-circle mr-2"  ><i class="fa fa-google"></i></a>
+        
+        <a href="{% url 'social:begin' 'linkedin-oauth2' %}" class="btn btn-info btn-circle" ><i class="fa fa-linkedin"></i></a>
+        </div>
         
           
         </div>

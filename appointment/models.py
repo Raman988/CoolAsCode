@@ -9,43 +9,41 @@ import appointment
 
 # Create your models here.
 
-class Order(models.Model):
-    status_choices = (
-        (1, 'Not Packed'),
-        (2, 'Ready For Shipment'),
-        (3, 'Shipped'),
-        (4, 'Delivered')
-    )
-    payment_status_choices = (
-        (1, 'SUCCESS'),
-        (2, 'FAILURE' ),
-        (3, 'PENDING'),
-    )
+# class Order(models.Model):
+#     status_choices = (
+#         (1, 'Not Packed'),
+#         (2, 'Ready For Shipment'),
+#         (3, 'Shipped'),
+#         (4, 'Delivered')
+#     )
+#     payment_status_choices = (
+#         (1, 'SUCCESS'),
+#         (2, 'FAILURE' ),
+#         (3, 'PENDING'),
+#     )
     
-    user = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    status = models.IntegerField(choices = status_choices, default=1)
+#     user = models.ForeignKey(Patient, on_delete=models.CASCADE)
+#     status = models.IntegerField(choices = status_choices, default=1)
     
-    
-
-    total_amount = models.FloatField()
-    payment_status = models.IntegerField(choices = payment_status_choices, default=3)
-    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True, default=None) 
-    datetime_of_payment = models.DateTimeField(default=timezone.now)
-    # related to razorpay
-    razorpay_order_id = models.CharField(max_length=500, null=True, blank=True)
-    razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
-    razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
     
 
-    def save(self, *args, **kwargs):
-        if self.order_id is None and self.datetime_of_payment and self.id:
-            self.order_id = self.datetime_of_payment.strftime('PAY2ME%Y%m%dODR') + str(self.id)
-        return super().save(*args, **kwargs)
+#     total_amount = models.FloatField()
+#     payment_status = models.IntegerField(choices = payment_status_choices, default=3)
+#     order_id = models.CharField(unique=True, max_length=100, null=True, blank=True, default=None) 
+#     datetime_of_payment = models.DateTimeField(default=timezone.now)
+#     # related to razorpay
+#     razorpay_order_id = models.CharField(max_length=500, null=True, blank=True)
+#     razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
+#     razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
+    
 
-    def __str__(self):
-        return self.user.email + " " + str(self.id)  
+#     def save(self, *args, **kwargs):
+#         if self.order_id is None and self.datetime_of_payment and self.id:
+#             self.order_id = self.datetime_of_payment.strftime('PAY2ME%Y%m%dODR') + str(self.id)
+#         return super().save(*args, **kwargs)
 
-
+#     def __str__(self):
+#         return self.user.email + " " + str(self.id) 
 class Appointment(models.Model):
     user = models.OneToOneField(Doctor,on_delete=models.CASCADE)
     #
@@ -71,6 +69,57 @@ class Appointment(models.Model):
 
     def __str__(self):
         return self.user.name
+ 
+class TakeAppointment(models.Model):
+    # 
+    user = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    date = models.DateField(auto_now_add=False,default=date.today)
+    time = models.TimeField(auto_now_add=False,default=timezone.now)
+    # time = models.TimeField()
+    
+    def __str__(self):
+        return self.user.name
+
+class Order(models.Model):
+    status_choices = (
+        (1, 'Not Packed'),
+        (2, 'Ready For Shipment'),
+        (3, 'Shipped'),
+        (4, 'Delivered')
+    )
+    payment_status_choices = (
+        (1, 'SUCCESS'),
+        (2, 'FAILURE' ),
+        (3, 'PENDING'),
+    )
+    
+    take = models.ForeignKey(TakeAppointment, on_delete=models.CASCADE )
+    status = models.IntegerField(choices = status_choices, default=1)
+    
+    
+
+    total_amount = models.FloatField()
+    payment_status = models.IntegerField(choices = payment_status_choices, default=3)
+    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True, default=None) 
+    datetime_of_payment = models.DateTimeField(default=timezone.now)
+    # related to razorpay
+    razorpay_order_id = models.CharField(max_length=500, null=True, blank=True)
+    razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
+    razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    def save(self, *args, **kwargs):
+        if self.order_id is None and self.datetime_of_payment and self.id:
+            self.order_id = self.datetime_of_payment.strftime('PAY2ME%Y%m%dODR') + str(self.id)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.take.user.email + " " + str(self.id)  
+
+
 
 
 class PatientAppointmentTrack(models.Model):
@@ -96,15 +145,4 @@ class PatientAppointmentTrack(models.Model):
 
 
 
-class TakeAppointment(models.Model):
-    # 
-    user = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE)
-    message = models.TextField()
-    created_at = models.DateTimeField(default=timezone.now)
-    date = models.DateField(auto_now_add=False,default=date.today)
-    time = models.TimeField(auto_now_add=False,default=timezone.now)
-    # time = models.TimeField()
-    
-    def __str__(self):
-        return self.user.name
+

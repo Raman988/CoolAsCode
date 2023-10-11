@@ -85,25 +85,25 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        #new
-        'NAME':os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-# DATABASES = {  
-#     'default': {  
-#         'ENGINE': 'django.db.backends.mysql',  
-#         'NAME': 'testonly',  
-#         'USER': 'root',  
-#         'PASSWORD': '',  
-#         'HOST': '127.0.0.1',  
-#         'PORT': '3307',  
-#         # 'OPTIONS': {  
-#         #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-#         # }  
-#     }  }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         #new
+#         'NAME':os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+DATABASES = {  
+    'default': {  
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'new',  
+        'USER': 'root',  
+        'PASSWORD': '',  
+        'HOST': '127.0.0.1',  
+        'PORT': '3307',  
+        # 'OPTIONS': {  
+        #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+        # }  
+    }  }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -141,8 +141,11 @@ USE_TZ = True
 EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
 EMAIL_HOST = 'smtp.gmail.com'
 
-EMAIL_HOST_USER = "xyz@gmail.com"
-EMAIL_HOST_PASSWORD = 'xyz'
+MAIL_HOST_USER = "raman7773536@gmail.com"
+
+# EMAIL_HOST_PASSWORD = 'jrcikdkizlvrofuw'
+
+EMAIL_HOST_PASSWORD = 'laaptzipiqtbmwhh'
 
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587

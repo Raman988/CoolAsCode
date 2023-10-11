@@ -57,7 +57,148 @@
 
 
 
+    
     <section class="dentist-area section-padding-50-0">
+    {% if request.user.is_authenticated and request.user.is_Patient %}
+    <div class="container">
+        <div class="col-lg-5" style="max-width: 40%;">
+            <div class="doctor-slider slider">
+                {% for apt in appointment %}
+    
+                <!-- Doctor Widget -->
+                <div class="profile-widget">
+                    <div class="doc-img">
+                        <a href="{% url 'appointment:docdetail' id=apt.id %}">
+                            <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
+                        </a>
+                        <a href="javascript:void(0)" class="fav-btn">
+                            <i class="far fa-bookmark"></i>
+                        </a>
+                    </div>
+                    <div class="pro-content">
+                        <h3 class="title">
+                            <a href="{% url 'appointment:docdetail' id=apt.id %}">{{ apt.user.name }}</a>
+                            <i class="fas fa-check-circle verified"></i>
+                        </h3>
+                        <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                        <div class="rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <span class="d-inline-block average-rating">(17)</span>
+                        </div>
+                        <ul class="available-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i> {{ apt.user.showAdditional.location }}
+                            </li>
+                            <li>
+                                <i class="far fa-clock"></i> Available on {{ apt.start_time }} to {{ apt.end_time }}
+                                in {{ apt.hospital_name }}
+                            </li>
+                            <li>
+                                <i class="far fa-money-bill-alt"></i> $300 - $1000
+                                <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                            </li>
+                        </ul>
+                        <div class="row row-sm">
+                            <div class="col-6">
+                                <a href="{% url 'appointment:docdetail' id=apt.id %}" class="btn view-btn">View Profile</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="{% url 'appointment:doctor-detail' id=apt.id %}" class="btn book-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+                 {% elif request.user.is_authenticated and request.user.is_Doctor%}
+                
+                 {% comment %} <div class="container"></div> {% endcomment %}
+               {% else %}
+               <div class="container">
+                <div class="col-lg-5" style="max-width: 40%;">
+                    <div class="doctor-slider slider">
+                        {% for apt in appointment %}
+            
+                        <!-- Doctor Widget -->
+                        <div class="profile-widget">
+                            <div class="doc-img">
+                                <a href="{% url 'appointment:docdetail' id=apt.id %}">
+                                    <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
+                                </a>
+                                <a href="javascript:void(0)" class="fav-btn">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                            </div>
+                            <div class="pro-content">
+                                <h3 class="title">
+                                    <a href="{% url 'appointment:docdetail' id=apt.id %}">{{ apt.user.name }}</a>
+                                    <i class="fas fa-check-circle verified"></i>
+                                </h3>
+                                <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <span class="d-inline-block average-rating">(17)</span>
+                                </div>
+                                <ul class="available-info">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i> {{ apt.user.showAdditional.location }}
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i> Available on {{ apt.start_time }} to {{ apt.end_time }}
+                                        in {{ apt.hospital_name }}
+                                    </li>
+                                    <li>
+                                        <i class="far fa-money-bill-alt"></i> $300 - $1000
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                    </li>
+                                </ul>
+                                <div class="row row-sm">
+                                    <div class="col-6">
+                                        <a href="{% url 'appointment:docdetail' id=apt.id %}" class="btn view-btn">View Profile</a>
+                                    </div>
+                                    {% comment %} <div class="col-6">
+                                        <a href="{% url 'appointment:doctor-detail' id=apt.id %}" class="btn book-btn">Book Now</a>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                        {% endif %}
+                
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; First</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+    
+                        {% comment %} <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span> {% endcomment %}
+    
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+{% comment %} <section class="dentist-area section-padding-50-0">
 
         <div class="container">
 
@@ -83,9 +224,7 @@
 
 
                 {% for apt in appointment %}
-                {% comment %} {% for i in d_add %} {% endcomment %}
-                {% comment %} {% for j in ds %} {% endcomment %}
-
+              
                     <!-- Single Dentist Area -->
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="single-dentist-area mb-100">
@@ -167,7 +306,4 @@
             </div>
 
         </div>
-    </section>
-
-
-{% endblock %}
+    </section> {% endcomment %}

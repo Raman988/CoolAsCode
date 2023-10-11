@@ -117,11 +117,11 @@ def editprofiledoctor(request,id):
  
     return render(request, "accounts/doctor/edit-profile.html", context)
 @login_required
-def display_cart(request):
+def display_cart(request,id):
     try:
-        qs = TakeAppointment.objects.get(user=request.user)
+        qs = TakeAppointment.objects.get(id=id)
         appointment = get_object_or_404(Appointment, id=qs.appointment.id)
-        return render(request, "payment/detail.html", {'cart': [appointment]})
+        return render(request, "payment/detail.html", {'cart': [appointment], 'id':id})
     except TakeAppointment.DoesNotExist:
         raise Http404("Appointment has already been taken.")
 
@@ -137,7 +137,8 @@ def doctordetails(request,id):
             # 
             t_app = TakeAppointment.objects.create(appointment=appointment, user=request.user,message=message, date=date,time=time) 
             t_app.save()
-            return  redirect(reverse_lazy("appointment:detail"))
+            # return  redirect(reverse_lazy("appointment:detail"))
+            return redirect('appointment:detail', t_app.id)
             # 
         return render(request, 'appointment/take_appointment_detail.html')
     
@@ -225,19 +226,43 @@ class AppointmentListView(ListView):
         return self.model.objects.filter(user_id=self.request.user.id).order_by('-id')
 
 
-class PatientListView(ListView):
-    model = TakeAppointment
-    context_object_name = 'patients'
-    template_name = "appointment/patient_list.html"
+# class PatientListView(ListView):
+#     model = TakeAppointment
+#     context_object_name = 'patients'
+#     template_name = "appointment/patient_list.html"
 
-    def get_queryset(self):
-        return self.model.objects.filter(appointment__user_id=self.request.user.id).order_by('-id') 
+#     def get_queryset(self):
+#         return self.model.objects.filter(appointment__user_id=self.request.user.id).order_by('-id') 
+def patient_list(request):
+    patients = TakeAppointment.objects.filter(appointment__user_id=request.user.id).order_by('-id')
+    
+    context = {
+        'patients': patients,
+    }
+
+    return render(request, 'appointment/patient_list.html', context)
+
+def doctor_list(request):
+    doctors = TakeAppointment.objects.filter(user__id=request.user.id).order_by('-id')
+    
+    context = {
+        'doctors': doctors,
+    }
+
+    return render(request, 'appointment/doctor_list.html', context)
 
 
-class PatientDeleteView(DeleteView):
-    model = TakeAppointment
-    success_url = reverse_lazy('appointment:patient-list')
 
+
+def delete_patient(request, pk):
+    appointment = get_object_or_404(TakeAppointment, pk=pk)
+    appointment.delete()
+    return redirect('appointment:patient-list')
+
+def delete_doctor(request, pk):
+    appointment = get_object_or_404(TakeAppointment, pk=pk)
+    appointment.delete()
+    return redirect('appointment:doctor-list')
 
 class AppointmentDeleteView(DeleteView):
     """
@@ -285,20 +310,24 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 @login_required
-def payment(request):
+def payment(request, id):
     if request.method == "POST":
         
-        cart = TakeAppointment.objects.get(user = request.user)
-        products_in_cart =Appointment.objects.filter(id= cart.appointment.id)
+        cart = TakeAppointment.objects.get(id = id)
+        # products_in_cart =Appointment.objects.filter(id= cart.appointment.id)
 
         
-        final_price = 0
+        # final_price = 0
+        print(cart.id)
     
        
-        order = Order.objects.create(user = request.user, total_amount = 0)
-        for product in products_in_cart:
-            final_price = product.price
-            product_in_order = PatientAppointmentTrack.objects.create(appointment = order,  user=request.user, price = product.price)
+        order = Order.objects.create(take=cart, total_amount = 0)
+        # for product in products_in_cart:
+        #     final_price = product.price
+        final_price= cart.appointment.price
+        print(final_price)
+        print(order)
+        # product_in_order = PatientAppointmentTrack.objects.create(appointment = order,  user=request.user, price = final_price)
        
         
         order.total_amount = final_price
@@ -377,9 +406,9 @@ def handlerequest(request):
             data = {
                 'order_id': order_db.order_id,
                 'transaction_id': order_db.razorpay_payment_id,
-                'user_email': order_db.user.email,
+                'user_email': order_db.take.user.email,
                 'date': str(order_db.datetime_of_payment),
-                'name': order_db.user.name,
+                'name': order_db.take.user.name,
                 'order': order_db,
                 'amount': order_db.total_amount,
             }
@@ -391,11 +420,11 @@ def handlerequest(request):
 
             mail_subject = 'Recent Order Details'
             message = render_to_string('payment/emailinvoice.html', {
-                'user': order_db.user,
+                'user': order_db.take.user,
                 'order': order_db
             })
             context_dict = {
-                'user': order_db.user,
+                'user': order_db.take.user,
                 'order': order_db
             }
             # template = get_template('payment/emailinvoice.html')
@@ -435,15 +464,15 @@ def handlerequest(request):
 class GenerateInvoice(View):
     def get(self, request, pk, *args, **kwargs):
         try:
-            order_db = Order.objects.get(id = pk, user = request.user, payment_status = 1)     #you can filter using order_id as well
+            order_db = Order.objects.get(id = pk , payment_status = 1)     #you can filter using order_id as well
         except:
             return HttpResponse("505 Not Found")
         data = {
             'order_id': order_db.order_id,
             'transaction_id': order_db.razorpay_payment_id,
-            'user_email': order_db.user.email,
+            'user_email': order_db.take.user.email,
             'date': str(order_db.datetime_of_payment),
-            'name': order_db.user.name,
+            'name': order_db.take.user.name,
             'order': order_db,
             'amount': order_db.total_amount,
         }

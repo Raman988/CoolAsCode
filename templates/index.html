@@ -131,138 +131,17 @@
 </section>
 
 
-{% comment %} <section class="dentist-area section-padding-50-0">
 
-    <div class="container"> {% endcomment %}
-
-
-
-
-
-
-
-        {% comment %} <div class="row">
-
-            <div class="col-12">
-                <div class="section-heading text-center">
-
-
-                    <h3>We have found {{ appointment.count }} doctor/s. </h3>
-                    <div class="line"></div>
-                </div>
-            </div>
-        </div> {% endcomment %}
-
-        {% comment %} <div class="row"> {% endcomment %}
-
-
-            {% comment %} {% for apt in home %} {% endcomment %}
-            {% comment %} {% for i in d_add %} {% endcomment %}
-            {% comment %} {% for j in ds %} {% endcomment %}
-
-            <!-- Single Dentist Area -->
-            {% comment %} <div class="col-12 col-sm-6 col-md-4">
-                <div class="single-dentist-area mb-100">
-                    <img style="height: 500px; width: 600px" src="{{ apt.user.showAppointment.get_image_url }}" alt="">
-                    <!-- Dentist Content -->
-                    <div class="dentist-content">
-                        <!-- Social Info -->
-                        <div class="dentist-social-info">
-
-                        </div>
-                        <!-- Dentist Info -->
-                        <div class="dentist-info bg-dark bg-gradient-overlay">
-                            {% if request.user.is_authenticated and request.user.is_Patient %}
-                            <h5>{{ apt.user.name }}</h5>
-                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-
-                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                                in {{ apt.hospital_name }}</p>
-                            <p>
-                                AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
-                                <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
-                                    Appointment</a>
-
-                            </p>
-
-
-
-                            {% elif request.user.is_authenticated and request.user.is_Doctor%}
-
-                            <h5>{{ apt.user.name }}</h5>
-                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                                in {{ apt.hospital_name }}</p>
-                            <p>AT {{ apt.user.showAdditional.location }}</p>
-
-                            {% else %}
-
-                            <h5>{{ apt.user.name }}</h5>
-                            <p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-                            <p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-                            <p>Available {{ apt.start_time }} to {{ apt.end_time }}
-                                in {{ apt.hospital_name }}</p>
-                            <p>
-                                AT {{ apt.user.showAdditional.location }} </p>
-
-
-                            {% endif %}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; First</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-
-                    {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
-
-
-        </div>
-
-    </div>
-</section> {% endcomment %}
-{% comment %}
-<h5></h5>
-<p>{{ apt.user.showAdditional.your_expertise }} Expert</p>
-<p>{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
-
-<p>Available {{ apt.start_time }} to {{ apt.end_time }}
-    in {{ apt.hospital_name }}</p>
-<p>
-    AT {{ apt.user.showAdditional.location }} <i class="fa fa-th"></i>
-    <a href="{% url 'appointment:doctor-detail' id=apt.id %}"> Take
-        Appointment</a>
-
-</p> {% endcomment %}
 {% if request.user.is_authenticated and request.user.is_Patient %}
 <div class="container">
-    <div class="col-lg-5">
+    <div class="col-lg-5" style="max-width: 100%;">
         <div class="doctor-slider slider">
             {% for apt in home %}
 
             <!-- Doctor Widget -->
             <div class="profile-widget">
                 <div class="doc-img">
-                    <a href="doctor-profile.html">
+                    <a href="{% url 'appointment:docdetail' id=apt.id %}">
                         <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
                     </a>
                     <a href="javascript:void(0)" class="fav-btn">
@@ -271,7 +150,7 @@
                 </div>
                 <div class="pro-content">
                     <h3 class="title">
-                        <a href="doctor-profile.html">{{ apt.user.name }}</a>
+                        <a href="{% url 'appointment:docdetail' id=apt.id %}">{{ apt.user.name }}</a>
                         <i class="fas fa-check-circle verified"></i>
                     </h3>
                     <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
@@ -312,14 +191,14 @@
              {% comment %} <div class="container"></div> {% endcomment %}
            {% else %}
            <div class="container">
-            <div class="col-lg-5">
+            <div class="col-lg-5" style="max-width: 100%;">
                 <div class="doctor-slider slider">
                     {% for apt in home %}
         
                     <!-- Doctor Widget -->
                     <div class="profile-widget">
                         <div class="doc-img">
-                            <a href="doctor-profile.html">
+                            <a href="{% url 'appointment:docdetail' id=apt.id %}">
                                 <img class="img-fluid" alt="User Image" src="{{ apt.user.showAppointment.get_image_url }}">
                             </a>
                             <a href="javascript:void(0)" class="fav-btn">
@@ -328,7 +207,7 @@
                         </div>
                         <div class="pro-content">
                             <h3 class="title">
-                                <a href="doctor-profile.html">{{ apt.user.name }}</a>
+                                <a href="{% url 'appointment:docdetail' id=apt.id %}">{{ apt.user.name }}</a>
                                 <i class="fas fa-check-circle verified"></i>
                             </h3>
                             <p class="speciality">{{ apt.qualification_name }}, {{ apt.institute_name }}</p>
@@ -355,7 +234,7 @@
                             </ul>
                             <div class="row row-sm">
                                 <div class="col-6">
-                                    <a href="doctor-profile.html" class="btn view-btn">View Profile</a>
+                                    <a href="{% url 'appointment:docdetail' id=apt.id %}" class="btn view-btn">View Profile</a>
                                 </div>
                                 {% comment %} <div class="col-6">
                                     <a href="{% url 'appointment:doctor-detail' id=apt.id %}" class="btn book-btn">Book Now</a>
@@ -373,9 +252,9 @@
                     <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
                     {% endif %}
 
-                    <span class="current">
+                    {% comment %} <span class="current">
                         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
+                    </span> {% endcomment %}
 
                     {% if page_obj.has_next %}
                     <a href="?page={{ page_obj.next_page_number }}">Next</a>

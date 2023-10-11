@@ -5,7 +5,7 @@ from django.views.generic import CreateView,ListView
 from .form import PatientSignUpForm, DoctorSignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import CustomUser, Doctor, DoctorAdditional, PatientAdditional
-# from .models import User
+
 from django.contrib.auth.views import LoginView, LogoutView
 
 from docmed import settings
@@ -37,7 +37,7 @@ def patient_register(request):
                 pass
 
             user = form.save(commit=False)
-            user.is_active = False
+            # user.is_active = False
             user.save()
 
             age = form.cleaned_data.get('age')
@@ -45,26 +45,26 @@ def patient_register(request):
 
             patient_additional = PatientAdditional.objects.create(user=user, age=age, profile_photo=profile_photo)
 
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
-            message = render_to_string('acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = user_email
+            # current_site = get_current_site(request)
+            # mail_subject = 'Activate your account.'
+            # message = render_to_string('acc_active_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # to_email = user_email
 
             try:
-                send_mail(
-                    subject=mail_subject,
-                    message=message,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[to_email],
-                    fail_silently=False,
-                )
-                messages.success(request, "A link has been sent to your email id. Please check your inbox and spam folder.")
-                return HttpResponseRedirect(reverse_lazy('accounts:Patient_register'))
+                # send_mail(
+                #     subject=mail_subject,
+                #     message=message,
+                #     from_email=settings.EMAIL_HOST_USER,
+                #     recipient_list=[to_email],
+                #     fail_silently=False,
+                # )
+                # messages.success(request, "A link has been sent to your email id. Please check your inbox and spam folder.")
+                return HttpResponseRedirect(reverse_lazy('accounts:login'))
             except:
                 form.add_error(None, 'An error occurred while sending the email. Please try again.')
                 messages.error(request, "An error occurred while sending the email. Please try again.")
@@ -87,7 +87,7 @@ def activate(request, uidb64, token):
         login(request, user)
         messages.success(request, "Successfully Logged In")
         return redirect(reverse_lazy('accounts:index'))
-        # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+       
     else:
         return HttpResponse('Activation link is invalid or your account is already Verified! Try To Login')    
 from django.contrib.auth import get_user_model
@@ -106,7 +106,7 @@ def doctor_register(request):
                 pass
 
             user = form.save(commit=False)
-            user.is_active = False
+            # user.is_active = False
             user.is_Doctor =True
             user.is_Patient= False
             user.save()
@@ -116,26 +116,26 @@ def doctor_register(request):
 
             DoctorAdditional.objects.create(user=user, location=location, your_expertise=your_expertise)
 
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
-            message = render_to_string('acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = user_email
+            # current_site = get_current_site(request)
+            # mail_subject = 'Activate your account.'
+            # message = render_to_string('acc_active_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # to_email = user_email
 
             try:
-                send_mail(
-                    subject=mail_subject,
-                    message=message,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[to_email],
-                    fail_silently=False,
-                )
-                messages.success(request, "A link has been sent to your email id. Please check your inbox and spam folder.")
-                return HttpResponseRedirect(reverse_lazy('accounts:Doctor_register'))
+                # send_mail(
+                #     subject=mail_subject,
+                #     message=message,
+                #     from_email=settings.EMAIL_HOST_USER,
+                #     recipient_list=[to_email],
+                #     fail_silently=False,
+                # )
+                # messages.success(request, "A link has been sent to your email id. Please check your inbox and spam folder.")
+                return HttpResponseRedirect(reverse_lazy('accounts:login'))
             except:
                 form.add_error(None, 'An error occurred while sending the email. Please try again.')
                 messages.error(request, "An error occurred while sending the email. Please try again.")
