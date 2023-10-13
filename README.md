@@ -1,4 +1,4 @@
-# Docmed
+
 # Project Name
 
 This project is called "DocMed" and it aims to provide a platform for doctors and patients to communicate and manage medical records online.
