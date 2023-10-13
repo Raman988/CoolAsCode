@@ -5,9 +5,7 @@ from .models import Appointment, TakeAppointment
 class CreateAppointmentForm1(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateAppointmentForm1, self).__init__(*args, **kwargs)
-        # self.fields['full_name'].label = "Full Name"
         self.fields['image'].label = "Image"
-        # self.fields['department'].label = "Department"
         self.fields['start_time'].label = "Start Time"
         self.fields['hospital_name'].label = "Hospital Name"
         self.fields['qualification_name'].label = "Qualification"
@@ -50,20 +48,15 @@ class CreateAppointmentForm1(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = [
-            # 'full_name', 
         'image',
-        #  'department',
           'start_time', 'end_time',
-        #    'location',
                   'hospital_name', 'qualification_name', 'institute_name']
 
   
 class CreateAppointmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateAppointmentForm, self).__init__(*args, **kwargs)
-        # self.fields['full_name'].label = "Full Name"
         self.fields['image'].label = "Image"
-        # self.fields['department'].label = "Department"
         self.fields['start_time'].label = "Start Time"
         self.fields['hospital_name'].label = "Hospital Name"
         self.fields['qualification_name'].label = "Qualification"
@@ -103,17 +96,13 @@ class CreateAppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = [
-            # 'full_name', 
         'image',
-        #  'department',
           'start_time', 'end_time',
-        #    'location',
                   'hospital_name', 'qualification_name', 'institute_name']
 
     def is_valid(self):
         valid = super(CreateAppointmentForm, self).is_valid()
 
-        # if already valid, then return True
         if valid:
             return valid
         return valid
@@ -159,16 +148,13 @@ class TakeAppointmentForm(forms.ModelForm):
     class Meta:
         model = TakeAppointment
         fields = ['appointment',
-        #  'full_name',
          'date',
          'time',
-        #   'phone_number',
            'message']
 
     def is_valid(self):
         valid = super(TakeAppointmentForm, self).is_valid()
 
-        # if already valid, then return True
         if valid:
             return valid
         return valid

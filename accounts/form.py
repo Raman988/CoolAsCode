@@ -8,16 +8,7 @@ GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
     )
-# DEPARTMENT_CHOICES= (
-#     ('Dentistry', "Dentistry"),
-#     ('Cardiology', "Cardiology"),
-#     ('ENT Specialists', "ENT Specialists"),
-#     ('Astrology', 'Astrology'),
-#     ('Neuroanatomy', 'Neuroanatomy'),
-#     ('Blood Screening', 'Blood Screening'),
-#     ('Eye Care', 'Eye Care'),
-#     ('Physical Therapy', 'Physical Therapy'),
-# )
+
 
 
 class PatientSignUpForm(UserCreationForm):
@@ -25,7 +16,6 @@ class PatientSignUpForm(UserCreationForm):
     phone_number = forms.CharField(required=True)
     age = forms.CharField(required=True, max_length=5)
     gender = forms.CharField(required=True,label='Gender', widget=forms.RadioSelect(choices=GENDER_CHOICES))
-    # gender = forms.CharField(max_length=1, choices=GENDER_CHOICES, default='M', null=True)
     profile_photo = forms.ImageField(required=False)
     class Meta:
         model = Patient
@@ -111,22 +101,13 @@ class PatientProfileUpdateForm(forms.ModelForm):
                 'placeholder': 'gender',
             }
         )
-        # self.request.showAdditional.fields['age'].widget.attrs.update(
-        # self.fields['age'].widget.attrs.update(
-        #     {
-        #         'placeholder': 'age',
-        #     }
-        # )
 
     class Meta:
         model = Patient
-        # , Patient.showAdditional
         fields = [
             "name",
-        #  "last_name",
           "email",
            "phone_number",
-        #    "age",
 
            "gender",
 
@@ -180,14 +161,10 @@ class DoctorProfileUpdateForm(forms.ModelForm):
        
     class Meta:
         model = Doctor
-# ,Doctor.showAdditional
         fields = ["name", 
-        # "last_name",
          "email",
         "gender",
         "phone_number",
-        # "your_expertise",
-        # "location",
          ]
          
 class DoctorProfileUpdateForm2(forms.ModelForm):
@@ -208,13 +185,7 @@ class DoctorProfileUpdateForm2(forms.ModelForm):
        
     class Meta:
         model = DoctorAdditional
-# ,Doctor.showAdditional
         fields = [
-            # "name", 
-        # "last_name",
-        #  "email",
-        # "gender",
-        # "phone_number",
         "your_expertise",
         "location",
          ]

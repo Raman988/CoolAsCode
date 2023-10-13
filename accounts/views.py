@@ -150,16 +150,19 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-class LoginViewUser(LoginView):
-    template_name = "login.html"
+from django.contrib.auth.views import LoginView
+
+def login_view_user(request):
+    return LoginView.as_view(template_name='login.html')(request)
 
 
 
-class HomePageView(ListView):
-    paginate_by = 9
-    model = Appointment
-    context_object_name = 'home'
-    template_name = "index.html"
+from django.core.paginator import Paginator
 
-    def get_queryset(self):
-        return self.model.objects.all().order_by('-id')
+def home_page_view(request):
+    appointment_list = Appointment.objects.all().order_by('-id')
+    paginator = Paginator(appointment_list, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'home': page_obj}
+    return render(request, 'index.html', context)
