@@ -19,6 +19,7 @@ from .forms import CreateAppointmentForm, TakeAppointmentForm
 from .models import Appointment, PatientAppointmentTrack, TakeAppointment, Order
 from accounts.models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from docmed import settings
 
 
@@ -45,11 +46,9 @@ class EditPatientProfileView(UpdateView):
             self.object = self.get_object()
         except Http404:
             raise Http404("User doesn't exists")
-        # context = self.get_context_data(object=self.object)
         return self.render_to_response(self.get_context_data())
 
-    #     
-
+    
     def get_object(self, queryset=None):
         obj = self.request.user
         print(obj)
@@ -58,8 +57,7 @@ class EditPatientProfileView(UpdateView):
             raise Http404("Patient doesn't exists")
         return obj
         
-    # 
-from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def editprofile(request, id):
@@ -97,11 +95,9 @@ def editprofiledoctor(request,id):
     try:
         obj2=Appointment.objects.get(user=request.user)
         form2 = CreateAppointmentForm (request.POST or None,request.FILES or None, instance = obj2)
-        # img_object = form2.instance  
     except:
         obj2=Appointment.objects.create(user=request.user)
         form2 = CreateAppointmentForm (request.POST or None,request.FILES or None, instance=obj2)
-        # img_object = form2.instance  
 
     # 
     if form.is_valid() and form1.is_valid() and form2.is_valid():
@@ -144,34 +140,6 @@ def doctordetails(request,id):
     
         #
 
-class TakeAppointmentView(CreateView):
-    template_name = 'appointment/take_appointment.html'
-    form_class = TakeAppointmentForm
-    extra_context = {
-        'title': 'Take Appointment'
-    }
-    success_url = reverse_lazy('appointment:detail')
-
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return reverse_lazy('accounts:login')
-        if self.request.user.is_authenticated and self.request.user.is_Doctor:
-            return reverse_lazy('accounts:login')
-        return super().dispatch(self.request, *args, **kwargs)
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(TakeAppointmentView, self).form_valid(form)
-
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
 
 """
    For Doctor Profile
@@ -181,58 +149,11 @@ class TakeAppointmentView(CreateView):
 # 
 
 
-class AppointmentCreateView(CreateView):
-    template_name = 'appointment/appointment_create.html'
-    form_class = CreateAppointmentForm
-    extra_context = {
-        'title': 'Post New Appointment'
-    }
-    success_url = reverse_lazy('appointment:doctor-appointment')
-
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    @method_decorator(user_is_doctor)
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return reverse_lazy('accounts:login')
-        # if self.request.user.is_authenticated and self.request.user.Types != 'DOCTOR':
-        #     return reverse_lazy('accounts:login')
-        return super().dispatch(self.request, *args, **kwargs)
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(AppointmentCreateView, self).form_valid(form)
-
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
 
 
-class AppointmentListView(ListView):
-    model = Appointment
-    template_name = 'appointment/appointment.html'
-    context_object_name = 'appointment'
-
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    @method_decorator(user_is_doctor)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(self.request, *args, **kwargs)
-
-    def get_queryset(self):
-        return self.model.objects.filter(user_id=self.request.user.id).order_by('-id')
 
 
-# class PatientListView(ListView):
-#     model = TakeAppointment
-#     context_object_name = 'patients'
-#     template_name = "appointment/patient_list.html"
-
-#     def get_queryset(self):
-#         return self.model.objects.filter(appointment__user_id=self.request.user.id).order_by('-id') 
+# 
 def patient_list(request):
     patients = TakeAppointment.objects.filter(appointment__user_id=request.user.id).order_by('-id')
     
@@ -264,18 +185,10 @@ def delete_doctor(request, pk):
     appointment.delete()
     return redirect('appointment:doctor-list')
 
-class AppointmentDeleteView(DeleteView):
-    """
-       For Delete any Appointment created by Doctor
-    """
-    model = Appointment
-    success_url = reverse_lazy('appointment:doctor-appointment')
 
 
-"""
-   For both Profile
-   
-"""
+
+
 
 
 #
@@ -285,18 +198,26 @@ class ServiceView(TemplateView):
     template_name = 'appointment/service.html'
 
 
-class SearchView(ListView):
+from django.views.generic import ListView
+from .models import DoctorAdditional
+
+def search_view(request):
     paginate_by = 6
     model = DoctorAdditional
     template_name = 'appointment/search.html'
     context_object_name = 'appointment'
 
-    def get_queryset(self):
-        return self.model.objects.filter(
-            your_expertise__contains=self.request.GET['your_expertise'],
-                                         location__contains=self.request.GET['location'],
-                                        #  name__contains=self.request.GET['name']
-                                         )
+    if request.method == 'GET':
+        your_expertise = request.GET.get('your_expertise')
+        location = request.GET.get('location')
+        queryset = model.objects.filter(
+            your_expertise__contains=your_expertise,
+            location__contains=location
+        )
+        context = {
+            'appointment': queryset
+        }
+        return render(request, template_name, context)
 
 # 
 
@@ -314,20 +235,13 @@ def payment(request, id):
     if request.method == "POST":
         
         cart = TakeAppointment.objects.get(id = id)
-        # products_in_cart =Appointment.objects.filter(id= cart.appointment.id)
-
-        
-        # final_price = 0
         print(cart.id)
     
        
         order = Order.objects.create(take=cart, total_amount = 0)
-        # for product in products_in_cart:
-        #     final_price = product.price
         final_price= cart.appointment.price
         print(final_price)
         print(order)
-        # product_in_order = PatientAppointmentTrack.objects.create(appointment = order,  user=request.user, price = final_price)
        
         
         order.total_amount = final_price
@@ -348,7 +262,6 @@ def payment(request, id):
         return HttpResponse("505 Not Found") 
 
 
-# for generating pdf invoice
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -401,7 +314,6 @@ def handlerequest(request):
             order_db.payment_status = 1
             order_db.save()
 
-            ## For generating Invoice PDF
             template = get_template('payment/invoice.html')
             data = {
                 'order_id': order_db.order_id,
@@ -477,15 +389,12 @@ class GenerateInvoice(View):
             'amount': order_db.total_amount,
         }
         pdf = render_to_pdf('payment/invoice.html', data)
-        #return HttpResponse(pdf, content_type='application/pdf')
 
         # force download
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Invoice_%s.pdf" %(data['order_id'])
             content = "inline; filename='%s'" %(filename)
-            #download = request.GET.get("download")
-            #if download:
             content = "attachment; filename=%s" %(filename)
             response['Content-Disposition'] = content
             return response
