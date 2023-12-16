@@ -24,38 +24,7 @@ from docmed import settings
 
 
 
-class EditPatientProfileView(UpdateView):
-    model=Patient
-    form_class = PatientProfileUpdateForm
-    template_name = 'accounts/patient/edit-profile.html'
-    success_url = reverse_lazy('accounts:index')
-  
-    context_object_name = 'patient'
 
-
-
-   
-
-    @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-    @method_decorator(user_is_patient)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(self.request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        try:
-            self.object = self.get_object()
-        except Http404:
-            raise Http404("User doesn't exists")
-        return self.render_to_response(self.get_context_data())
-
-    
-    def get_object(self, queryset=None):
-        obj = self.request.user
-        print(obj)
-        obj.save()
-        if obj is None:
-            raise Http404("Patient doesn't exists")
-        return obj
         
 
 
