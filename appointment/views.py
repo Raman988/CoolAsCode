@@ -163,8 +163,11 @@ def delete_doctor(request, pk):
 #
 
 
-class ServiceView(TemplateView):
+from django.views.generic import TemplateView
+
+def service_view(request):
     template_name = 'appointment/service.html'
+    return render(request, template_name)
 
 
 from django.views.generic import ListView

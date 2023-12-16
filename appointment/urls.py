@@ -14,7 +14,7 @@ app_name = 'appointment'
 urlpatterns = [
 
     # path('', HomePageView.as_view(), name='home'),
-    path('service', ServiceView.as_view(), name='service'),
+    path('service', views.service_view,  name='service'),
     path('<int:pk>/patient/delete/', views.delete_patient, name='delete-patient'),
     path('<int:pk>/doctor/delete/', views.delete_doctor, name='delete-doctor'),
     path('search/', views.search_view, name='search'),
